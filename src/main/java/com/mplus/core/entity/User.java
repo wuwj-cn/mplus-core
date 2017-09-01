@@ -1,4 +1,6 @@
-package com.mplus.core.domain;
+package com.mplus.core.entity;
+
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,11 +11,14 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.mplus.core.entity.base.BaseEntity;
+
 @Entity
 @Table(name = "t_user")
-public class User {
+public class User extends BaseEntity implements Serializable {
+	private static final long serialVersionUID = -9071755205002858798L;
 
-    @Id
+	@Id
     @Column(length=32)
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid",strategy="uuid")

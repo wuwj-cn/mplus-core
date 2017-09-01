@@ -1,4 +1,4 @@
-package com.mplus.core.config;
+package com.mplus.config;
 
 import java.util.ArrayList;
 import java.util.List;

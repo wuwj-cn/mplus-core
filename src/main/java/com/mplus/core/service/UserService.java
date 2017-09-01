@@ -1,6 +1,6 @@
 package com.mplus.core.service;
 
-import com.mplus.core.domain.User;
+import com.mplus.core.entity.User;
 
 public interface UserService {
 
