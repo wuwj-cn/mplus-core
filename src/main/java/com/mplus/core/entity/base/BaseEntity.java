@@ -2,6 +2,11 @@ package com.mplus.core.entity.base;
 
 import java.util.Date;
 
+import javax.persistence.MappedSuperclass;
+
+import com.mplus.utils.DataState;
+
+@MappedSuperclass
 public abstract class BaseEntity {
 	//插入人
 	protected Long insertBy;
@@ -11,8 +16,12 @@ public abstract class BaseEntity {
 	protected Long updateBy;
 	//修改时间
 	protected Date updateAt;
+	//数据状态
+	protected DataState state;
+	
 	protected BaseEntity(){
 		this.insertAt = this.updateAt = new Date();
+		this.state = DataState.ENABLE;
 	}
 	public Long getInsertBy() {
 		return insertBy;
@@ -37,5 +46,11 @@ public abstract class BaseEntity {
 	}
 	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
+	}
+	public DataState getState() {
+		return state;
+	}
+	public void setState(DataState state) {
+		this.state = state;
 	}
 }
