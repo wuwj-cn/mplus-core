@@ -37,7 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/api").permitAll().anyRequest().authenticated().and().formLogin()
+		// 定义不用授权验证的request请求
+		String[] antPatterns = new String[]{"/", "/api/**", "/activiti/**"};
+		http.authorizeRequests().antMatchers(antPatterns).permitAll().anyRequest().authenticated().and().formLogin()
 				.loginPage("/login").permitAll().and().logout().permitAll()
 				// .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 				.and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
