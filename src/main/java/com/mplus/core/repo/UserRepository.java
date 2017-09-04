@@ -9,9 +9,9 @@ import com.mplus.core.entity.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, String> {
 
-	@Query("select u from User u where u.username = :username and u.password = :password")
+	@Query("select u from User u where u.username = ?1 and u.password = ?2")
 	User find(String username, String password);
 	
-	@Query("select u from User u where u.username = :username")
+	@Query("select u from User u where u.username = ?")
 	User findByUsername(String username);
 }
