@@ -1,4 +1,4 @@
-package com.mplus.activiti.listener;
+package com.mplus.core.listener;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +12,7 @@ import com.mplus.core.service.UserService;
 import com.mplus.utils.SpringUtil;
 
 public class LeaderApproveListener implements TaskListener {
-	
+	private static final long serialVersionUID = -5924279940765763222L;
 	private final static Logger log = LoggerFactory.getLogger(LeaderApproveListener.class);
 	
 	@Override

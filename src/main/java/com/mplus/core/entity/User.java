@@ -1,4 +1,6 @@
-package com.mplus.core.domain;
+package com.mplus.core.entity;
+
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,21 +11,31 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
 
-@Entity
-@Table(name = "t_user")
-public class User {
+import com.mplus.core.entity.base.BaseEntity;
+import com.mplus.utils.MD5Util;
 
-    @Id
-    @Column(length=32)
+@Entity
+@Table(name = "user")
+public class User extends BaseEntity implements Serializable {
+	private static final long serialVersionUID = -9071755205002858798L;
+
+	@Id
+    @Column(length=64)
 	@GeneratedValue(generator="system-uuid")
 	@GenericGenerator(name="system-uuid",strategy="uuid")
     private String id;
     
+	@Column(length=32)
     @NotEmpty(message = "用户名不能为空")
     private String username;
     
+	@Column(length=32)
+    @NotEmpty
+    private String code;
+    
+	@Column(length=48)
     @NotEmpty(message = "密码不能为空")
-    private String password;    
+    private String password;   
     
     public User() {}
 
@@ -49,12 +61,20 @@ public class User {
 		this.username = username;
 	}
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = MD5Util.MD5Salt(password);
 	}
 
 }
