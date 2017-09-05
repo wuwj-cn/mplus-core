@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User find(String username, String password) {
-		return userRepository.find(username, password);
+		return userRepository.find(username, MD5Util.MD5Salt(password));
 	}
 
 	@Override
