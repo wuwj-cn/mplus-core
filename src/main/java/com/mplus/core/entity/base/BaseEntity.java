@@ -4,8 +4,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 
 import com.mplus.utils.DataState;
@@ -24,8 +22,7 @@ public abstract class BaseEntity {
 
 	private Date updateAt; // 修改时间
 
-	@Enumerated(EnumType.STRING)
-	@Column(length=2)
+	@Column(length=2, nullable = false)
 	@Convert(converter = DataStateConverter.class)
 	private DataState dataState; // 数据状态
 

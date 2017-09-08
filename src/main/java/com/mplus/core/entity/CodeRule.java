@@ -5,12 +5,9 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,20 +26,16 @@ public class CodeRule extends BaseEntity implements Serializable {
 	@GenericGenerator(name="system-uuid",strategy="uuid")
 	private String ruleId;
 	
-	@NotNull
-	@Column(length=20)
+	@Column(length=20, nullable = false)
 	private String ruleCode;
 	
-	@NotNull
-	@Column(length=100)
+	@Column(length=100, nullable = false)
 	private String ruleName;
 	
 	@Column(length=100)
 	private String rulePrefix;
 	
-	@NotNull 
-	@Enumerated(EnumType.STRING)
-	@Column(length=3)
+	@Column(length=3, nullable = false)
 	@Convert(converter = RulePolicyConverter.class)
 	private RulePolicy rulePolicy;
 	

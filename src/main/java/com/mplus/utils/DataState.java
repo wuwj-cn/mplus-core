@@ -5,22 +5,17 @@ import java.util.Objects;
 public enum DataState {
 	ENABLE("0"), DELETED("1");
 	
-	private String cName;
+	private final String name;
+
 	private DataState(String name) {
-		this.cName = name;
-	}
-	@Override
-	public String toString() {
-		return this.cName;
+		this.name= name;
 	}
 	
-	public String getcName() {
-		return cName;
+	public String getName() {
+		return name;
 	}
-	public void setcName(String cName) {
-		this.cName = cName;
-	}
-	static DataState fromString(String name){
+	
+	public static DataState fromString(String name){
         Objects.requireNonNull(name, "value can not be null");
         switch (name) {
         case "0":
