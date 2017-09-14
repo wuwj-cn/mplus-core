@@ -26,7 +26,7 @@ public class CodeRuleServiceTest {
 		rule.setRuleName("test");
 		rule.setRulePolicy(RulePolicy.SERIAL);
 		codeRuleService.saveCodeRule(rule);
-//		CodeRule r = codeRuleService.findOneByCode("001");
-//		assertNotNull(r);
+		CodeRule r = codeRuleService.findOneByCode("001");
+		assertNotNull(r);
 	}
 }
