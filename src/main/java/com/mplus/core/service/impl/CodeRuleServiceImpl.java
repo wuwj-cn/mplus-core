@@ -17,6 +17,10 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 	
 	@Override
 	public CodeRule saveCodeRule(CodeRule rule) {
+		CodeRule r = codeRuleRespository.findOneByCode(rule.getRuleCode(), DataState.ENABLE);
+		if (r != null) {
+			throw new RuntimeException("规则编码已存在");
+		}
 		codeRuleRespository.save(rule);
 		return rule;
 	}
@@ -43,7 +47,7 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 
 	@Override
 	public CodeRule findOneByCode(String ruleCode) {
-		return codeRuleRespository.findOneByCode(ruleCode);
+		return codeRuleRespository.findOneByCode(ruleCode, DataState.ENABLE);
 	}
 
 }

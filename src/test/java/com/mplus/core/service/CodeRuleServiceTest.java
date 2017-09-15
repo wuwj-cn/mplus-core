@@ -1,6 +1,6 @@
 package com.mplus.core.service;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,8 +25,18 @@ public class CodeRuleServiceTest {
 		rule.setRuleCode("001");
 		rule.setRuleName("test");
 		rule.setRulePolicy(RulePolicy.SERIAL);
+		rule.setSerialLength(5);
+		rule.setCurrentValue(String.format("%0"+rule.getSerialLength()+"d", 0));
 		codeRuleService.saveCodeRule(rule);
 		CodeRule r = codeRuleService.findOneByCode("001");
 		assertNotNull(r);
+	}
+	
+	@Test
+	public void testRemoveCodeRule() {
+		CodeRule rule = codeRuleService.findOneByCode("001");
+		codeRuleService.removeCodeRule(rule);
+		rule = codeRuleService.findOneByCode("001");
+		assertNull(rule);
 	}
 }
