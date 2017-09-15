@@ -42,6 +42,9 @@ public class CodeRule extends BaseEntity implements Serializable {
 	@Column(length=5)
 	private Integer serialLength;
 	
+	@Column(length=13)
+	private String currentValue;
+	
 	@Column(length=255)
 	private String remark;
 	
@@ -79,6 +82,10 @@ public class CodeRule extends BaseEntity implements Serializable {
 		this.rulePrefix = rulePrefix;
 	}
 
+	public RulePolicy getRulePolicy() {
+		return rulePolicy;
+	}
+
 	public void setRulePolicy(RulePolicy rulePolicy) {
 		this.rulePolicy = rulePolicy;
 	}
@@ -89,6 +96,14 @@ public class CodeRule extends BaseEntity implements Serializable {
 
 	public void setSerialLength(Integer serialLength) {
 		this.serialLength = serialLength;
+	}
+
+	public String getCurrentValue() {
+		return currentValue;
+	}
+
+	public void setCurrentValue(String currentValue) {
+		this.currentValue = currentValue;
 	}
 
 	public String getRemark() {
