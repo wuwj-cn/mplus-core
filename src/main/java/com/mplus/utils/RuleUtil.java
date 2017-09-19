@@ -1,5 +1,8 @@
 package com.mplus.utils;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import com.mplus.core.entity.CodeRule;
 
 /**
@@ -8,10 +11,27 @@ import com.mplus.core.entity.CodeRule;
  *
  */
 public class RuleUtil {
+	
+	private static AtomicInteger currentValue; 
+	private static ReentrantReadWriteLock lock = null;  
+	
+	public RuleUtil() {
+		currentValue = new AtomicInteger(0);
+		lock = new ReentrantReadWriteLock();  
+	}
 
 	public static String serial(CodeRule rule) {
-		int currentValue = Integer.valueOf(rule.getCurrentValue()).intValue();
-		Integer len = rule.getSerialLength();
-		return String.format("%0"+len+"d", currentValue + 1);
+		String serial = null;
+		try {
+			lock.readLock().lock();  
+			currentValue = new AtomicInteger(Integer.valueOf(rule.getCurrentValue()).intValue());
+			Integer len = rule.getSerialLength();
+			serial = String.format("%0"+len+"d", currentValue.getAndIncrement());
+		} catch(Exception e) {
+			e.printStackTrace(); 
+		} finally {
+			lock.readLock().unlock(); 
+		}
+		return serial;
 	}
 }

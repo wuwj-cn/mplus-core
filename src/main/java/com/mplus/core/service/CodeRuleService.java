@@ -13,4 +13,6 @@ public interface CodeRuleService {
 	CodeRule findOneById(String ruleId);
 	
 	CodeRule findOneByCode(String ruleCode);
+	
+	String getSerial(String ruleCode);
 }
