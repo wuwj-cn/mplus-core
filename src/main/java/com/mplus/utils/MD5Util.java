@@ -40,7 +40,7 @@ public class MD5Util {
 	}
 
 	/**
-	 * 加盐MD5
+	 * 加盐MD5，盐值与密码混淆
 	 */
 	public static String MD5Salt(String password) {
 		Random r = new Random();
