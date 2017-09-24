@@ -9,35 +9,37 @@ import org.junit.Test;
 public class UuidUtilTest {
 
 	@Test
-	public void testGenerateShortUuid() {
-		for(int i = 0, len = 10; i<len; i++){
-			new Thread(new Task()).start();;
-		}
-	}
-	
-	class Task implements Runnable  {
-		int random = new Random().nextInt(10);
-		int len = Integer.MAX_VALUE;
-		String str = null;
-		Set<String> set = new HashSet<String>();
-		
-		@Override
-		public void run() {
-			System.out.println("random: " + random + ", start...");
-			for(int i = random*len/10; i < (random+1)*len/10; i++){
-				str = UuidUtil.generateShortUuid();
+	public void testGetShortUuid() {
+		Runnable run = null;
+
+		// int maxValue = Integer.MAX_VALUE;
+		int maxValue = 100;
+		run = () -> {
+			int random = new Random().nextInt(10);
+			Set<String> set = new HashSet<String>();
+			int low = maxValue / 10 * random;
+			int high = maxValue / 10 * (random + 1);
+			System.out.println(Thread.currentThread().getName() + ", random: " + random + ", 取值区间：" + low + "-" + high
+					+ ", 个数：" + (high - low) + ", start...");
+			for (int ix = low; ix < high; ix++) {
+				String str = UuidUtil.getShortUuid();
+				System.out.println(Thread.currentThread().getName() + ", random: " + random + ", uuid：" + str);
 				if (!set.add(str)) {
-					System.out.println("random: " + random + ", 当前数：" + i + ", 存在重复随机数：" + str);
+					System.out.println(Thread.currentThread().getName() + ", random: " + random + ", 当前数：" + ix
+							+ ", 存在重复随机数：" + str);
+					return;
 				}
 			}
-		}
+			System.out.println(Thread.currentThread().getName() + ", random: " + random + ", end...");
+		};
 
-	}
-	
-	public static void main(String[] args) {
-		for(int i = 0, len = 10; i<len; i++){
-			new Thread(new UuidUtilTest().new Task()).start();;
+		for (int i = 0, length = 1; i < length; i++) {
+			new Thread(run).start();
 		}
+	}
+
+	public static void main(String[] args) {
+		new UuidUtilTest().testGetShortUuid();
 	}
 
 }
