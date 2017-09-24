@@ -1,5 +1,7 @@
 package com.mplus.core.service.impl;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import com.mysql.jdbc.StringUtils;
 @Service
 public class CodeRuleServiceImpl implements CodeRuleService {
 
+	private static ReentrantReadWriteLock lock = null;  
+	
 	@Autowired
 	CodeRuleRepository codeRuleRespository;
 	
@@ -56,17 +60,33 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 	 * 高并发流水号生成
 	 */
 	public String getSerial(String ruleCode) {
-		CodeRule rule = codeRuleRespository.findOneByCode(ruleCode, DataState.ENABLE);
-		RulePolicy policy = rule.getRulePolicy();
 		String serial = null;
-		switch(policy) {
-			case SERIAL: serial = RuleUtil.serial(rule);
-			case DATE:
-			case DATE_SERIAL: 
-			default: serial = RuleUtil.serial(rule);
+		try {
+			lock.readLock().lock();
+			CodeRule rule = codeRuleRespository.findOneByCode(ruleCode, DataState.ENABLE);
+			RulePolicy policy = rule.getRulePolicy();
+			try {
+				lock.readLock().unlock();
+				lock.writeLock().lock();
+				switch(policy) {
+					case SERIAL: serial = RuleUtil.serial(rule);
+					case DATE:
+					case DATE_SERIAL: 
+					default: serial = RuleUtil.serial(rule);
+				}
+				rule.setCurrentValue(serial);
+				codeRuleRespository.save(rule);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				lock.readLock().lock();
+				lock.writeLock().unlock();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			lock.readLock().unlock();
 		}
-		rule.setCurrentValue(serial);
-		codeRuleRespository.save(rule);
 		return serial;
 	}
 

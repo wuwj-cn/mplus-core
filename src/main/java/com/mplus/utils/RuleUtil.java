@@ -21,17 +21,9 @@ public class RuleUtil {
 	}
 
 	public static String serial(CodeRule rule) {
-		String serial = null;
-		try {
-			lock.readLock().lock();  
-			currentValue = new AtomicInteger(Integer.valueOf(rule.getCurrentValue()).intValue());
-			Integer len = rule.getSerialLength();
-			serial = String.format("%0"+len+"d", currentValue.getAndIncrement());
-		} catch(Exception e) {
-			e.printStackTrace(); 
-		} finally {
-			lock.readLock().unlock(); 
-		}
+		currentValue = new AtomicInteger(Integer.valueOf(rule.getCurrentValue()).intValue());
+		Integer len = rule.getSerialLength();
+		String serial = String.format("%0"+len+"d", currentValue.getAndIncrement());
 		return serial;
 	}
 }
