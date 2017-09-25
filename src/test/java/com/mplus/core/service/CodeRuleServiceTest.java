@@ -1,6 +1,7 @@
 package com.mplus.core.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mplus.core.entity.CodeRule;
+import com.mplus.core.taskexecutor.AsyncTaskService;
 import com.mplus.utils.RulePolicy;
 
 @RunWith(SpringRunner.class)
@@ -18,6 +20,9 @@ public class CodeRuleServiceTest {
 
 	@Autowired
 	private CodeRuleService codeRuleService;
+	
+	@Autowired
+	private AsyncTaskService taskService;
 
 	@Test
 	public void testSaveCodeRule() {
@@ -38,5 +43,15 @@ public class CodeRuleServiceTest {
 		codeRuleService.removeCodeRule(rule);
 		rule = codeRuleService.findOneByCode("001");
 		assertNull(rule);
+	}
+	
+	@Test
+	public void testGetSerial() {
+		String ruleCode = "001";
+//		String serial = codeRuleService.getSerial(ruleCode);
+		for (int i = 0, len = 10; i < len; i++) {
+			taskService.executeAsyncTask(i);
+		}
+//		assertEquals("00001", serial);
 	}
 }
