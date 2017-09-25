@@ -16,7 +16,7 @@ import com.mysql.jdbc.StringUtils;
 @Service
 public class CodeRuleServiceImpl implements CodeRuleService {
 
-	private static ReentrantReadWriteLock lock = null;  
+	private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();;  
 	
 	@Autowired
 	CodeRuleRepository codeRuleRespository;
