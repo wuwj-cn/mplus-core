@@ -23,7 +23,7 @@ public class RuleUtil {
 	public static String serial(CodeRule rule) {
 		currentValue = new AtomicInteger(Integer.valueOf(rule.getCurrentValue()).intValue());
 		Integer len = rule.getSerialLength();
-		String serial = String.format("%0"+len+"d", currentValue.getAndIncrement());
+		String serial = String.format("%0"+len+"d", currentValue.incrementAndGet());
 		return serial;
 	}
 }
