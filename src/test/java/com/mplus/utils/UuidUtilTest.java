@@ -11,9 +11,7 @@ public class UuidUtilTest {
 	@Test
 	public void testGetShortUuid() {
 		Runnable run = null;
-
-		// int maxValue = Integer.MAX_VALUE;
-		int maxValue = 100;
+		int maxValue = Integer.MAX_VALUE;
 		run = () -> {
 			int random = new Random().nextInt(10);
 			Set<String> set = new HashSet<String>();
@@ -33,7 +31,7 @@ public class UuidUtilTest {
 			System.out.println(Thread.currentThread().getName() + ", random: " + random + ", end...");
 		};
 
-		for (int i = 0, length = 1; i < length; i++) {
+		for (int i = 0, length = 3; i < length; i++) {
 			new Thread(run).start();
 		}
 	}

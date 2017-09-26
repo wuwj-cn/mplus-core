@@ -3,7 +3,12 @@ package com.mplus.core.service.impl;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
+import org.springframework.util.concurrent.FailureCallback;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.SuccessCallback;
 
 import com.mplus.core.entity.CodeRule;
 import com.mplus.core.repo.CodeRuleRepository;
@@ -16,11 +21,11 @@ import com.mysql.jdbc.StringUtils;
 @Service
 public class CodeRuleServiceImpl implements CodeRuleService {
 
-	private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();;  
-	
+	private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();;
+
 	@Autowired
 	CodeRuleRepository codeRuleRespository;
-	
+
 	@Override
 	public CodeRule saveCodeRule(CodeRule rule) {
 		CodeRule r = codeRuleRespository.findOneByCode(rule.getRuleCode(), DataState.ENABLE);
@@ -68,11 +73,13 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 			try {
 				lock.readLock().unlock();
 				lock.writeLock().lock();
-				switch(policy) {
-					case SERIAL: serial = RuleUtil.serial(rule);
-					case DATE:
-					case DATE_SERIAL: 
-					default: serial = RuleUtil.serial(rule);
+				switch (policy) {
+				case SERIAL:
+					serial = RuleUtil.serial(rule);
+				case DATE:
+				case DATE_SERIAL:
+				default:
+					serial = RuleUtil.serial(rule);
 				}
 				rule.setCurrentValue(serial);
 				codeRuleRespository.save(rule);
@@ -89,5 +96,4 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 		}
 		return serial;
 	}
-
 }

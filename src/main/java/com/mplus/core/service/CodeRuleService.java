@@ -1,5 +1,7 @@
 package com.mplus.core.service;
 
+import org.springframework.util.concurrent.ListenableFuture;
+
 import com.mplus.core.entity.CodeRule;
 
 public interface CodeRuleService {
