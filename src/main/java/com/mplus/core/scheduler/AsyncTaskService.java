@@ -1,4 +1,4 @@
-package com.mplus.core.taskexecutor;
+package com.mplus.core.scheduler;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
