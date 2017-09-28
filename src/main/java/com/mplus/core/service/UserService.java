@@ -4,9 +4,9 @@ import com.mplus.core.entity.User;
 
 public interface UserService {
 
-	User find(String username, String password);
+	User find(String userName, String password);
 	
-	User findByUsername(String username);
+	User findByUserName(String userName);
 	
 	void saveUser(User user);
 }

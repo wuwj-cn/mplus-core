@@ -2,6 +2,9 @@ package com.mplus.utils;
 
 import static org.junit.Assert.assertArrayEquals;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +24,9 @@ public class RuleUtilTest {
 	
 	@Test
 	public void testSerial() {
-		CodeRule rule = codeRuleService.findOneByCode("001");
-		String serial = RuleUtil.serial(rule);
+		CodeRule rule = codeRuleService.findOneByCode("SERIAL_DATE");
+		String serial = RuleUtil.getBySerialAndDate(rule);
 		assertArrayEquals(new Object[]{"00001"}, new Object[]{serial});
 	}
-
+	
 }

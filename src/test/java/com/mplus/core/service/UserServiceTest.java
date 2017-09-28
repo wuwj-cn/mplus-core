@@ -17,16 +17,15 @@ import com.mplus.core.repo.UserRepository;
 public class UserServiceTest {
 	
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 
 	@Test
 	public void testSaveUser() {
 		User user = new User();
-		user.setUsername("wuwj");
-		user.setCode("001");
+		user.setUserName("wuwj");
 		user.setPassword("123456");
-		userRepository.save(user);
-		User u = userRepository.findByUsername("wuwj");
+		userService.saveUser(user);
+		User u = userService.findByUserName("wuwj");
 		assertNotNull(u);
 	}
 

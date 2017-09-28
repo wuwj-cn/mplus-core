@@ -69,17 +69,20 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 		try {
 			lock.readLock().lock();
 			CodeRule rule = codeRuleRespository.findOneByCode(ruleCode, DataState.ENABLE);
+			if(null == rule) {
+				throw new RuntimeException("not set rule code");
+			}
 			RulePolicy policy = rule.getRulePolicy();
 			try {
 				lock.readLock().unlock();
 				lock.writeLock().lock();
 				switch (policy) {
 				case SERIAL:
-					serial = RuleUtil.serial(rule);
+					serial = RuleUtil.get(rule);
 				case DATE:
 				case DATE_SERIAL:
 				default:
-					serial = RuleUtil.serial(rule);
+					serial = RuleUtil.get(rule);
 				}
 				rule.setCurrentValue(serial);
 				codeRuleRespository.save(rule);
