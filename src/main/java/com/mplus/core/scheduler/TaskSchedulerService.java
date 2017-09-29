@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import com.mplus.core.service.CodeRuleService;
+import com.mplus.utils.RuleCode;
 
 public class TaskSchedulerService {
 	private static final Logger logger = LoggerFactory.getLogger(TaskSchedulerService.class);
@@ -21,8 +22,7 @@ public class TaskSchedulerService {
         Thread current = Thread.currentThread();  
         Date now = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String ruleCode = "001";
-		String serial = codeRuleService.getSerial(ruleCode);
+		String serial = codeRuleService.getSerial(RuleCode.USER);
 		logger.info(current.getName() + ", serial:" + serial + ", 当前时间：" + df.format(now));
     }
 }

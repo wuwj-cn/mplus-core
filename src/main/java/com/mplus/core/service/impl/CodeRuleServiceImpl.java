@@ -3,17 +3,13 @@ package com.mplus.core.service.impl;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import org.springframework.util.concurrent.FailureCallback;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.util.concurrent.SuccessCallback;
 
 import com.mplus.core.entity.CodeRule;
 import com.mplus.core.repo.CodeRuleRepository;
 import com.mplus.core.service.CodeRuleService;
 import com.mplus.utils.DataState;
+import com.mplus.utils.RuleCode;
 import com.mplus.utils.RulePolicy;
 import com.mplus.utils.RuleUtil;
 import com.mysql.jdbc.StringUtils;
@@ -64,11 +60,11 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 	/**
 	 * 高并发流水号生成
 	 */
-	public String getSerial(String ruleCode) {
+	public String getSerial(RuleCode ruleCode) {
 		String serial = null;
 		try {
 			lock.readLock().lock();
-			CodeRule rule = codeRuleRespository.findOneByCode(ruleCode, DataState.ENABLE);
+			CodeRule rule = codeRuleRespository.findOneByCode(ruleCode.getName(), DataState.ENABLE);
 			if(null == rule) {
 				throw new RuntimeException("not set rule code");
 			}

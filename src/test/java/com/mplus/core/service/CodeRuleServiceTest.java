@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mplus.core.entity.CodeRule;
+import com.mplus.utils.RuleCode;
 import com.mplus.utils.RulePolicy;
 
 @RunWith(SpringRunner.class)
@@ -44,8 +45,7 @@ public class CodeRuleServiceTest {
 	
 	@Test
 	public void testGetSerial() {
-		String ruleCode = "001";
-		String serial = codeRuleService.getSerial(ruleCode);
+		String serial = codeRuleService.getSerial(RuleCode.USER);
 		assertEquals("00004", serial);
 	}
 }

@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void saveUser(User user) {
-		String userCode = codeRuleService.getSerial(RuleCode.USER.getName());
+		String userCode = codeRuleService.getSerial(RuleCode.USER);
 		user.setUserCode(userCode);
 		String password = MD5Util.MD5Salt(user.getPassword());
 		user.setPassword(password);
