@@ -25,7 +25,7 @@ public class RuleUtilTest {
 	@Test
 	public void testSerial() {
 		CodeRule rule = codeRuleService.findOneByCode("SERIAL_DATE");
-		String serial = RuleUtil.getBySerialAndDate(rule);
+		String serial = RuleUtil.getSerial(rule);
 		assertArrayEquals(new Object[]{"00001"}, new Object[]{serial});
 	}
 	

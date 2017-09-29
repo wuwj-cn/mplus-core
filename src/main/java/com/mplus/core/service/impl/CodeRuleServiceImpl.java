@@ -12,7 +12,6 @@ import com.mplus.core.repo.CodeRuleRepository;
 import com.mplus.core.service.CodeRuleService;
 import com.mplus.utils.DataState;
 import com.mplus.utils.RuleCode;
-import com.mplus.utils.RulePolicy;
 import com.mplus.utils.RuleUtil;
 import com.mysql.jdbc.StringUtils;
 
@@ -73,18 +72,10 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 			if(null == rule) {
 				throw new RuntimeException("not set rule code");
 			}
-			RulePolicy policy = rule.getRulePolicy();
 			try {
 				lock.readLock().unlock();
 				lock.writeLock().lock();
-				switch (policy) {
-				case SERIAL:
-					serial = RuleUtil.get(rule);
-				case DATE:
-				case DATE_SERIAL:
-				default:
-					serial = RuleUtil.get(rule);
-				}
+				serial = RuleUtil.getSerial(rule);
 				rule.setCurrentValue(serial);
 				codeRuleRespository.save(rule);
 			} catch (Exception e) {
