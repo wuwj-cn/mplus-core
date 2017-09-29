@@ -16,7 +16,7 @@ import com.mplus.utils.RulePolicy;
 import com.mplus.utils.RulePolicyConverter;
 
 @Entity
-@Table(name = "m_code_rule")
+@Table(name = "MP_CODE_RULE")
 public class CodeRule extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -4498917973674072910L;
 	

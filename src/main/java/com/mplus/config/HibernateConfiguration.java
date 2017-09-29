@@ -3,8 +3,6 @@ package com.mplus.config;
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -13,10 +11,10 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 @Deprecated
 public class HibernateConfiguration {
 
-	@Autowired
+//	@Autowired
     private Environment environment;
 
-    @Bean
+//    @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 //        sessionFactory.setDataSource(dataSource());
@@ -25,7 +23,6 @@ public class HibernateConfiguration {
         return sessionFactory;
      }
 	
-    @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getRequiredProperty("spring.datasource.driverClassName"));
@@ -43,8 +40,8 @@ public class HibernateConfiguration {
 //        return properties;        
 //    }
     
-	@Bean
-    @Autowired
+//	@Bean
+//    @Autowired
     public HibernateTransactionManager transactionManager(SessionFactory s) {
        HibernateTransactionManager txManager = new HibernateTransactionManager();
        txManager.setSessionFactory(s);

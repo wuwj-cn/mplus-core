@@ -15,7 +15,7 @@ import com.mplus.core.entity.base.BaseEntity;
 import com.mplus.utils.MD5Util;
 
 @Entity
-@Table(name = "m_user")
+@Table(name = "MP_USER")
 public class User extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -9071755205002858798L;
 

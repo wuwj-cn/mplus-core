@@ -1,9 +1,11 @@
 package com.mplus.core.service.impl;
 
+import java.util.Date;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mplus.core.entity.CodeRule;
 import com.mplus.core.repo.CodeRuleRepository;
@@ -15,6 +17,7 @@ import com.mplus.utils.RuleUtil;
 import com.mysql.jdbc.StringUtils;
 
 @Service
+@Transactional
 public class CodeRuleServiceImpl implements CodeRuleService {
 
 	private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();;
@@ -37,6 +40,7 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 		if (StringUtils.isNullOrEmpty(rule.getRuleId())) {
 			throw new RuntimeException("object id is null or empty");
 		}
+		rule.setUpdateAt(new Date());
 		codeRuleRespository.save(rule);
 		return rule;
 	}
@@ -44,6 +48,7 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 	@Override
 	public void removeCodeRule(CodeRule rule) {
 		rule.setDataState(DataState.DELETED);
+		rule.setUpdateAt(new Date());
 		codeRuleRespository.save(rule);
 	}
 

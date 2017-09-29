@@ -24,29 +24,45 @@ public class RuleUtil {
 	}
 
 	public static String get(CodeRule rule) {
-		currentValue = new AtomicInteger(Integer.valueOf(rule.getCurrentValue()).intValue());
-		Integer len = rule.getSerialLength();
-		String serial = String.format("%0"+len+"d", currentValue.incrementAndGet());
 		String prefix = rule.getRulePrefix();
-		serial = StringUtils.isNullOrEmpty(prefix) ? serial : prefix + serial;
+		Integer len = rule.getSerialLength();
+		String serial = null;
+		if(StringUtils.isNullOrEmpty(prefix)) {
+			currentValue = new AtomicInteger(Integer.valueOf(rule.getCurrentValue()).intValue());
+			serial = String.format("%0"+len+"d", currentValue.incrementAndGet());
+		} else {
+			currentValue = new AtomicInteger(Integer.valueOf(rule.getCurrentValue().substring(prefix.length())).intValue());
+			serial = prefix + String.format("%0"+len+"d", currentValue.incrementAndGet());
+		}
 		return serial;
 	}
 	
 	public static String getByDate(CodeRule rule) {
-		SimpleDateFormat df=new SimpleDateFormat("yyyyMMddHHmmss");
-		String serial = df.format(new Date());
+		String serial = null;
+		SimpleDateFormat df=new SimpleDateFormat("yyyyMMdd"); //yyyyMMddHHmmss
+		String date = df.format(new Date());
 		String prefix = rule.getRulePrefix();
-		serial = StringUtils.isNullOrEmpty(prefix) ? serial : prefix + serial;
+		if(StringUtils.isNullOrEmpty(prefix)) {
+			serial = date;
+		} else {
+			serial = prefix + date;
+		}
 		return serial;
 	}
 	
 	public static String getBySerialAndDate(CodeRule rule) {
-		currentValue = new AtomicInteger(Integer.valueOf(rule.getCurrentValue()).intValue());
-		Integer len = rule.getSerialLength();
-		String serial = String.format("%0"+len+"d", currentValue.incrementAndGet());
-		SimpleDateFormat df=new SimpleDateFormat("yyyyMMddHHmmss");
-		String date = df.format(new Date());
+		String serial = null;
 		String prefix = rule.getRulePrefix();
+		SimpleDateFormat df=new SimpleDateFormat("yyyyMMdd");
+		String date = df.format(new Date());
+		Integer len = rule.getSerialLength();
+		if(StringUtils.isNullOrEmpty(prefix)) {
+			currentValue = new AtomicInteger(Integer.valueOf(rule.getCurrentValue()).intValue());
+			serial = String.format("%0"+len+"d", currentValue.incrementAndGet());
+		} else {
+			currentValue = new AtomicInteger(Integer.valueOf(rule.getCurrentValue().substring(prefix.length())).intValue());
+			serial = prefix + date + String.format("%0"+len+"d", currentValue.incrementAndGet());
+		}
 		serial = StringUtils.isNullOrEmpty(prefix) ? serial : prefix + date + serial;
 		return serial;
 	}

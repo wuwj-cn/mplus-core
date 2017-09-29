@@ -9,11 +9,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mplus.core.entity.User;
 import com.mplus.core.service.UserService;
 
 @Service
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired(required = true)
