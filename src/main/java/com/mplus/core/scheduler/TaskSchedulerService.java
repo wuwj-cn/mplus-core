@@ -6,10 +6,12 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.mplus.core.service.CodeRuleService;
 import com.mplus.enums.RuleCode;
 
+@Component
 public class TaskSchedulerService {
 	private static final Logger logger = LoggerFactory.getLogger(TaskSchedulerService.class);
 	
