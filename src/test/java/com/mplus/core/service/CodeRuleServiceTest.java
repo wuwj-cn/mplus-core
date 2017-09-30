@@ -12,8 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mplus.core.entity.CodeRule;
-import com.mplus.utils.RuleCode;
-import com.mplus.utils.RulePolicy;
+import com.mplus.enums.RuleCode;
+import com.mplus.enums.RulePolicy;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)

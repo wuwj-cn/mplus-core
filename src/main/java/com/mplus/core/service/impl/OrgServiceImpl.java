@@ -13,7 +13,8 @@ import com.mplus.core.repo.OrgRepository;
 import com.mplus.core.service.OrgService;
 import com.mplus.core.tree.entity.CheckboxTreeNode;
 import com.mplus.core.tree.entity.TreeNode;
-import com.mplus.utils.DataState;
+import com.mplus.enums.DataState;
+import com.mplus.utils.RuleUtil;
 import com.mysql.jdbc.StringUtils;
 
 @Service
@@ -58,9 +59,8 @@ public class OrgServiceImpl implements OrgService {
 	public List<TreeNode> getNodes(String id) {
 		List<Org> orgs = this.findOrgsByParent(id);
 		List<TreeNode> nodes = new ArrayList<TreeNode>();
-		for(Org org : orgs) {
-			nodes.add(new TreeNode(org.getOrgId(), org.getOrgCode(), org.getOrgName(), false, false));
-		}
+		orgs.stream().forEach(
+				org -> nodes.add(new TreeNode(org.getOrgId(), org.getOrgCode(), org.getOrgName(), false, false)));
 		return nodes;
 	}
 
@@ -68,10 +68,9 @@ public class OrgServiceImpl implements OrgService {
 	public List<TreeNode> getCheckboxNodes(String id) {
 		List<Org> orgs = this.findOrgsByParent(id);
 		List<TreeNode> nodes = new ArrayList<TreeNode>();
-		for(Org org : orgs) {
-			nodes.add(new CheckboxTreeNode(org.getOrgId(), org.getOrgCode(), org.getOrgName(), false, false, false));
-		}
-		return null;
+		orgs.stream().forEach(org -> nodes
+				.add(new CheckboxTreeNode(org.getOrgId(), org.getOrgCode(), org.getOrgName(), false, false, false)));
+		return nodes;
 	}
 
 }

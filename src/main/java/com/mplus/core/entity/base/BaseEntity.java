@@ -6,8 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 
-import com.mplus.utils.DataState;
-import com.mplus.utils.DataStateConverter;
+import com.mplus.enums.DataState;
+import com.mplus.enums.DataStateConverter;
 
 @MappedSuperclass
 public abstract class BaseEntity {

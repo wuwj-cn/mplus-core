@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mplus.core.entity.CodeRule;
 import com.mplus.core.repo.CodeRuleRepository;
 import com.mplus.core.service.CodeRuleService;
-import com.mplus.utils.DataState;
-import com.mplus.utils.RuleCode;
+import com.mplus.enums.DataState;
+import com.mplus.enums.RuleCode;
 import com.mplus.utils.RuleUtil;
 import com.mysql.jdbc.StringUtils;
 

@@ -30,7 +30,7 @@ public class Org extends BaseEntity implements Serializable {
 	@GenericGenerator(name="system-uuid",strategy="uuid")
 	private String orgId;
 	
-	@Column(length=20, nullable = false)
+	@Column(length=20, nullable = false, unique = true)
 	private String orgCode;
 	
 	@Column(length=100, nullable = false)
@@ -41,7 +41,7 @@ public class Org extends BaseEntity implements Serializable {
 	
 	@Column(length=255)
 	private String remark;
-
+	
 	public Org(){}
 
 	public String getOrgId() {

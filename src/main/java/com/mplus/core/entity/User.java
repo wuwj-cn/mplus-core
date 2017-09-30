@@ -2,16 +2,22 @@ package com.mplus.core.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import com.mplus.core.entity.base.BaseEntity;
+import com.mplus.enums.UserState;
+import com.mplus.enums.UserStateConverter;
 import com.mplus.utils.MD5Util;
 
 @Entity
@@ -20,37 +26,49 @@ public class User extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -9071755205002858798L;
 
 	@Id
-    @Column(length=64)
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid",strategy="uuid")
-    private String id;
-    
-	@Column(length=32)
-    @NotEmpty(message = "用户名不能为空")
-    private String userName;
-    
-	@Column(length=32)
-    @NotEmpty
-    private String userCode;
-    
-	@Column(length=48)
-    @NotEmpty(message = "密码不能为空")
-    private String password;   
-    
-    public User() {}
+	@Column(length = 64)
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	private String userId;
 
-    public User(String username, String password) {
-        super();
-        this.userName = username;
-        this.password = password;
-    }
+	@Column(length = 20, nullable = false, unique = true)
+	private String userCode;
 
-    public String getId() {
-		return id;
+	@Column(length = 100, nullable = false)
+	private String userName;
+
+	@Column(length = 48)
+	private String password;
+
+	@Column(length = 100)
+	private String zhName;
+
+	@Column(length = 50)
+	private String email;
+
+	@Column(length = 2, nullable = false)
+	@Convert(converter = UserStateConverter.class)
+	private UserState userState;
+
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	@JoinColumn(name = "ORG_ID")
+	private Org org;
+
+	public User() {
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public User(String username, String password) {
+		super();
+		this.userName = username;
+		this.password = password;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getUserName() {
@@ -60,7 +78,7 @@ public class User extends BaseEntity implements Serializable {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+
 	public String getUserCode() {
 		return userCode;
 	}
@@ -75,6 +93,38 @@ public class User extends BaseEntity implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = MD5Util.MD5Salt(password);
+	}
+
+	public String getZhName() {
+		return zhName;
+	}
+
+	public void setZhName(String zhName) {
+		this.zhName = zhName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public UserState getUserState() {
+		return userState;
+	}
+
+	public void setUserState(UserState userState) {
+		this.userState = userState;
+	}
+
+	public Org getOrg() {
+		return org;
+	}
+
+	public void setOrg(Org org) {
+		this.org = org;
 	}
 
 }

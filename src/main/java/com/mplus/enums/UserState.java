@@ -2,12 +2,13 @@ package com.mplus.enums;
 
 import java.util.Objects;
 
-public enum DataState {
-	ENABLE("0"), DELETED("1");
+public enum UserState {
+
+	ENABLE("正常"), DISABLED("停用");
 	
 	private final String name;
 
-	private DataState(String name) {
+	private UserState(String name) {
 		this.name= name;
 	}
 	
@@ -15,13 +16,13 @@ public enum DataState {
 		return name;
 	}
 	
-	public static DataState fromString(String name){
+	public static UserState fromString(String name){
         Objects.requireNonNull(name, "value can not be null");
         switch (name) {
         case "0":
-            return DataState.ENABLE;
+            return UserState.ENABLE;
         case "1":
-            return DataState.DELETED;
+            return UserState.DISABLED;
         default:
             throw new IllegalArgumentException("Name [" + name + "] not supported.");
         }

@@ -6,12 +6,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.concurrent.ListenableFuture;
 
 import com.mplus.core.entity.CodeRule;
-import com.mplus.utils.DataState;
+import com.mplus.enums.DataState;
 
 @Repository
 public interface CodeRuleRepository extends BaseRepository<CodeRule, String> {
 
-	@Query(value = "select o from CodeRule o where o.ruleId = ?")
+	@Query(value = "select o from CodeRule o where o.ruleId = ?1")
 	CodeRule findOneById(String ruleId);
 
 	@Query(value = "select o from CodeRule o where o.ruleCode = ?1 and o.dataState = ?2")

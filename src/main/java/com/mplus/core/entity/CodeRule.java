@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.mplus.core.entity.base.BaseEntity;
-import com.mplus.utils.RulePolicy;
-import com.mplus.utils.RulePolicyConverter;
+import com.mplus.enums.RulePolicy;
+import com.mplus.enums.RulePolicyConverter;
 
 @Entity
 @Table(name = "MP_CODE_RULE")

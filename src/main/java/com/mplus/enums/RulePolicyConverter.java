@@ -1,4 +1,4 @@
-package com.mplus.utils;
+package com.mplus.enums;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.mplus.core.entity.CodeRule;
+import com.mplus.enums.RulePolicy;
 import com.mysql.jdbc.StringUtils;
 
 /**

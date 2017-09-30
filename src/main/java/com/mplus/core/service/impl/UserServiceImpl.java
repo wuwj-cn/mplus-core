@@ -8,8 +8,8 @@ import com.mplus.core.entity.User;
 import com.mplus.core.repo.UserRepository;
 import com.mplus.core.service.CodeRuleService;
 import com.mplus.core.service.UserService;
+import com.mplus.enums.RuleCode;
 import com.mplus.utils.MD5Util;
-import com.mplus.utils.RuleCode;
 
 @Service
 @Transactional

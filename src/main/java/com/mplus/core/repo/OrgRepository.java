@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 
 import com.mplus.core.entity.Org;
-import com.mplus.utils.DataState;
+import com.mplus.enums.DataState;
 
 /**
  * @author wuwj

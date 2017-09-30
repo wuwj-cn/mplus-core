@@ -1,4 +1,4 @@
-package com.mplus.utils;
+package com.mplus.enums;
 
 import java.util.Objects;
 
