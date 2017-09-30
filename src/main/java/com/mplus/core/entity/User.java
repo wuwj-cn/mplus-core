@@ -1,6 +1,8 @@
 package com.mplus.core.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -53,6 +56,9 @@ public class User extends BaseEntity implements Serializable {
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORG_ID")
 	private Org org;
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	private Set<Role> roles = new HashSet<Role>();
 
 	public User() {
 	}
@@ -125,6 +131,14 @@ public class User extends BaseEntity implements Serializable {
 
 	public void setOrg(Org org) {
 		this.org = org;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 }
