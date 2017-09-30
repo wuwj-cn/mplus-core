@@ -4,9 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.springframework.util.StringUtils;
+
 import com.mplus.core.entity.CodeRule;
 import com.mplus.enums.RulePolicy;
-import com.mysql.jdbc.StringUtils;
 
 /**
  * 编码规则工具类
@@ -38,7 +39,7 @@ public class RuleUtil {
 		String prefix = rule.getRulePrefix();
 		Integer len = rule.getSerialLength();
 		String serial = null;
-		if (StringUtils.isNullOrEmpty(prefix)) {
+		if (StringUtils.isEmpty(prefix)) {
 			currentValue = new AtomicInteger(Integer.valueOf(rule.getCurrentValue()).intValue());
 			serial = String.format("%0" + len + "d", currentValue.incrementAndGet());
 		} else {
@@ -54,7 +55,7 @@ public class RuleUtil {
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd"); // yyyyMMddHHmmss
 		String date = df.format(new Date());
 		String prefix = rule.getRulePrefix();
-		if (StringUtils.isNullOrEmpty(prefix)) {
+		if (StringUtils.isEmpty(prefix)) {
 			serial = date;
 		} else {
 			serial = prefix + date;
@@ -68,7 +69,7 @@ public class RuleUtil {
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
 		String date = df.format(new Date());
 		Integer len = rule.getSerialLength();
-		if (StringUtils.isNullOrEmpty(prefix)) {
+		if (StringUtils.isEmpty(prefix)) {
 			currentValue = new AtomicInteger(Integer.valueOf(rule.getCurrentValue()).intValue());
 			serial = String.format("%0" + len + "d", currentValue.incrementAndGet());
 		} else {
@@ -76,7 +77,7 @@ public class RuleUtil {
 					Integer.valueOf(rule.getCurrentValue().substring(prefix.length())).intValue());
 			serial = prefix + date + String.format("%0" + len + "d", currentValue.incrementAndGet());
 		}
-		serial = StringUtils.isNullOrEmpty(prefix) ? serial : prefix + date + serial;
+		serial = StringUtils.isEmpty(prefix) ? serial : prefix + date + serial;
 		return serial;
 	}
 }
