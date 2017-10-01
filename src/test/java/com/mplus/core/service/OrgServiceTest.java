@@ -1,6 +1,7 @@
 package com.mplus.core.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.List;
 
 import org.junit.Test;
@@ -19,7 +20,6 @@ public class OrgServiceTest {
 	@Autowired
 	private OrgService orgService;
 	
-	@Test
 	public void testSaveOrg() {
 		Org org = new Org();
 		org.setOrgCode("001100");
@@ -38,19 +38,6 @@ public class OrgServiceTest {
 		child2.setOrgName("产品组");
 		child2.setParentOrgId(org.getOrgId());
 		orgService.saveOrg(child2);
-	}
-
-	@Test
-	public void testUpdateOrg() {
-		Org org = orgService.findOneByCode("001101");
-		org.setOrgName("开发组");
-		orgService.updateOrg(org);
-	}
-
-	@Test
-	public void testRemoveOrg() {
-		Org org = orgService.findOneByCode("001101");
-		orgService.removeOrg(org);
 	}
 
 	@Test

@@ -4,11 +4,8 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import org.junit.Test;
-
 public class UuidUtilTest {
 
-	@Test
 	public void testGetShortUuid() {
 		Runnable run = null;
 		int maxValue = Integer.MAX_VALUE;

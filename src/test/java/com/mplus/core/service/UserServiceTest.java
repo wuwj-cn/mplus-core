@@ -25,7 +25,6 @@ public class UserServiceTest {
 	@Autowired
 	private OrgService orgService;
 
-	@Test
 	public void testSaveUser() {
 		User user = new User();
 		user.setUserName("wuwj");
@@ -36,7 +35,6 @@ public class UserServiceTest {
 		userService.saveUser(user);
 	}
 
-	@Test
 	public void testFindByUserName() {
 		// 该测试用例在懒加载情况下执行会出现no session异常
 		User user = userService.findByUserName("wuwj");

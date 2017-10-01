@@ -42,10 +42,4 @@ public class CodeRuleServiceTest {
 		rule = codeRuleService.findOneByCode("001");
 		assertNull(rule);
 	}
-	
-	@Test
-	public void testGetSerial() {
-		String serial = codeRuleService.getSerial(RuleCode.USER);
-		assertEquals("00004", serial);
-	}
 }
