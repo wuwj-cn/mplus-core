@@ -1,8 +1,6 @@
 package com.mplus.core.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mplus.core.entity.CodeRule;
-import com.mplus.enums.RuleCode;
 import com.mplus.enums.RulePolicy;
 
 @RunWith(SpringRunner.class)
