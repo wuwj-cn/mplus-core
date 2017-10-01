@@ -6,6 +6,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.mplus.core.entity.CodeRule;
 import com.mplus.core.repo.CodeRuleRepository;
@@ -13,7 +14,6 @@ import com.mplus.core.service.CodeRuleService;
 import com.mplus.enums.DataState;
 import com.mplus.enums.RuleCode;
 import com.mplus.utils.RuleUtil;
-import com.mysql.jdbc.StringUtils;
 
 @Service
 @Transactional
@@ -36,7 +36,7 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 
 	@Override
 	public CodeRule updateCodeRule(CodeRule rule) {
-		if (StringUtils.isNullOrEmpty(rule.getRuleId())) {
+		if (StringUtils.isEmpty(rule.getRuleId())) {
 			throw new RuntimeException("object id is null or empty");
 		}
 		rule.setUpdateAt(new Date());

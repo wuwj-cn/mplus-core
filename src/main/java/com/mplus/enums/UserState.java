@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public enum UserState {
 
-	ENABLE("正常"), DISABLED("停用");
+	ENABLE("0"), DISABLED("1");
 	
 	private final String name;
 

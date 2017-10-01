@@ -22,11 +22,13 @@ public class UserServiceImpl implements UserService {
 	private CodeRuleService codeRuleService;
 
 	@Override
+	@Transactional(readOnly = true)
 	public User find(String userName, String password) {
 		return userRepository.find(userName, MD5Util.MD5Salt(password));
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public User findByUserName(String userName) {
 		return userRepository.findByUserName(userName);
 	}

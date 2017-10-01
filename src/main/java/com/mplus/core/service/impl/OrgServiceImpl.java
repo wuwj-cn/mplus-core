@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.mplus.core.entity.Org;
 import com.mplus.core.repo.OrgRepository;
@@ -14,8 +15,6 @@ import com.mplus.core.service.OrgService;
 import com.mplus.core.tree.entity.CheckboxTreeNode;
 import com.mplus.core.tree.entity.TreeNode;
 import com.mplus.enums.DataState;
-import com.mplus.utils.RuleUtil;
-import com.mysql.jdbc.StringUtils;
 
 @Service
 @Transactional
@@ -31,7 +30,7 @@ public class OrgServiceImpl implements OrgService {
 
 	@Override
 	public Org updateOrg(Org org) {
-		if (StringUtils.isNullOrEmpty(org.getOrgId())) {
+		if (StringUtils.isEmpty(org.getOrgId())) {
 			throw new RuntimeException("object id is null or empty");
 		}
 		org.setUpdateAt(new Date());
@@ -46,16 +45,19 @@ public class OrgServiceImpl implements OrgService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Org findOneByCode(String orgCode) {
 		return orgRepository.findOneByCode(orgCode, DataState.ENABLE);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Org> findOrgsByParent(String parentOrgId) {
 		return orgRepository.findOrgsByParent(parentOrgId, DataState.ENABLE);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<TreeNode> getNodes(String id) {
 		List<Org> orgs = this.findOrgsByParent(id);
 		List<TreeNode> nodes = new ArrayList<TreeNode>();
@@ -65,6 +67,7 @@ public class OrgServiceImpl implements OrgService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<TreeNode> getCheckboxNodes(String id) {
 		List<Org> orgs = this.findOrgsByParent(id);
 		List<TreeNode> nodes = new ArrayList<TreeNode>();

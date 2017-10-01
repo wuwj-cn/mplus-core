@@ -53,7 +53,7 @@ public class User extends BaseEntity implements Serializable {
 	@Convert(converter = UserStateConverter.class)
 	private UserState userState;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORG_ID")
 	private Org org;
 	
