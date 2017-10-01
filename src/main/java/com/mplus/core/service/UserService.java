@@ -1,5 +1,8 @@
 package com.mplus.core.service;
 
+import java.util.List;
+
+import com.mplus.core.entity.Org;
 import com.mplus.core.entity.User;
 
 public interface UserService {
@@ -9,4 +12,6 @@ public interface UserService {
 	User findByUserName(String userName);
 	
 	void saveUser(User user);
+	
+	List<User> findByOrg(Org org);
 }

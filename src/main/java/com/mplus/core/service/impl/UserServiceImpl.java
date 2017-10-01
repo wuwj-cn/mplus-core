@@ -1,13 +1,17 @@
 package com.mplus.core.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mplus.core.entity.Org;
 import com.mplus.core.entity.User;
 import com.mplus.core.repo.UserRepository;
 import com.mplus.core.service.CodeRuleService;
 import com.mplus.core.service.UserService;
+import com.mplus.enums.DataState;
 import com.mplus.enums.RuleCode;
 import com.mplus.utils.MD5Util;
 
@@ -17,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private CodeRuleService codeRuleService;
 
@@ -42,4 +46,12 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(user);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<User> findByOrg(Org org) {
+		if (null == org) {
+			throw new RuntimeException("org is null");
+		}
+		return userRepository.findByOrg(org.getOrgId(), DataState.ENABLE);
+	}
 }
