@@ -79,7 +79,7 @@ public class OrgControllerTest {
 		Result result = JSON.parseObject(response, Result.class);
 		JSONArray orgs = (JSONArray) result.getData();
 		logger.info("orgs: " + JSON.toJSONString(orgs));
-		assertEquals("ROOT", ((Org)orgs.listIterator().next()).getOrgName());
+		assertEquals("ROOT", ((Org)orgs.get(0)).getOrgName());
 	}
 
 	@Test
