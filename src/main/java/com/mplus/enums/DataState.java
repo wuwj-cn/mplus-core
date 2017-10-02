@@ -9,22 +9,30 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public enum DataState {
 	ENABLE("0", "正常"), DELETED("1", "删除");
 	
-	private final String code;
-	private final String name;
+	private String code;
+	private String name;
 
 	private DataState(String code, String name) {
 		this.code = code;
 		this.name= name;
 	}
-	
+
 	public String getCode() {
 		return code;
 	}
-	
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public String getName() {
 		return name;
 	}
-	
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public static DataState fromString(String code){
         Objects.requireNonNull(code, "value can not be null");
         switch (code) {
