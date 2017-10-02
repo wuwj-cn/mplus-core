@@ -8,7 +8,7 @@ public class RulePolicyConverter implements AttributeConverter<RulePolicy, Strin
 
 	@Override
 	public String convertToDatabaseColumn(RulePolicy policy) {
-		return policy.getName();
+		return policy.getCode();
 	}
 
 	@Override

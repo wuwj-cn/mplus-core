@@ -4,25 +4,31 @@ import java.util.Objects;
 
 public enum RuleCode {
 
-	USER("USER");
+	USER("USER", "用户");
 	
+	private final String code;
 	private final String name;
 
-	private RuleCode(String name) {
+	private RuleCode(String code, String name) {
+		this.code = code;
 		this.name= name;
+	}
+	
+	public String getCode() {
+		return code;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public static RuleCode fromString(String name){
-        Objects.requireNonNull(name, "value can not be null");
-        switch (name) {
+	public static RuleCode fromString(String code){
+        Objects.requireNonNull(code, "value can not be null");
+        switch (code) {
         case "USER":
             return RuleCode.USER;
         default:
-            throw new IllegalArgumentException("Name [" + name + "] not supported.");
+            throw new IllegalArgumentException("code [" + code + "] not supported.");
         }
     }
 }

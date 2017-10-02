@@ -3,29 +3,29 @@ package com.mplus.enums;
 import java.util.Objects;
 
 public enum RulePolicy {
-	SERIAL("0"), // 流水号
-	DATE("1"), // 日期
-	DATE_SERIAL("2"); // 日期+流水号
+	SERIAL("0", "流水号"), // 流水号
+	DATE("1", "日期"), // 日期
+	DATE_SERIAL("2", "日期流水号"); // 日期+流水号
 	
-	private String name;
-	private RulePolicy(String name) {
+	private final String code;
+	private final String name;
+	
+	private RulePolicy(String code, String name) {
+		this.code = code;
 		this.name = name;
 	}
-	@Override
-	public String toString() {
-		return this.name;
+	
+	public String getCode() {
+		return code;
 	}
 	
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	
-	static RulePolicy fromString(String name){
-        Objects.requireNonNull(name, "value can not be null");
-        switch (name) {
+	public static RulePolicy fromString(String code){
+        Objects.requireNonNull(code, "value can not be null");
+        switch (code) {
         case "0":
             return RulePolicy.SERIAL;
         case "1":
@@ -33,7 +33,7 @@ public enum RulePolicy {
         case "2":
             return RulePolicy.DATE_SERIAL;
         default:
-            throw new IllegalArgumentException("Name [" + name + "] not supported.");
+            throw new IllegalArgumentException("code [" + code + "] not supported.");
         }
     }
 }

@@ -7,7 +7,7 @@ import javax.persistence.Converter;
 public class PriviTypeConverter implements AttributeConverter<PriviType, String> {
 	@Override
 	public String convertToDatabaseColumn(PriviType type) {
-		return type.getName();
+		return type.getCode();
 	}
 
 	@Override

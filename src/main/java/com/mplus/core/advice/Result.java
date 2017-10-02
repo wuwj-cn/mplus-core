@@ -3,8 +3,6 @@ package com.mplus.core.advice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSON;
-
 public class Result {
 	private static final Logger logger = LoggerFactory.getLogger(Result.class);
 
@@ -18,7 +16,6 @@ public class Result {
 		Result result = new Result();
 		result.setSuccess(true);
 		result.setData(data);
-		logger.info("result: " + result.toString());
 		return result;
 	}
 
@@ -26,7 +23,6 @@ public class Result {
 		Result result = new Result();
 		result.setSuccess(false);
 		result.setData(data);
-		logger.info("result: " + result.toString());
 		return result;
 	}
 
@@ -44,10 +40,5 @@ public class Result {
 
 	public void setData(Object data) {
 		this.data = data;
-	}
-
-	@Override
-	public String toString() {
-		return "[success=" + success + ", data=" + JSON.toJSONString(data) + "]";
 	}
 }

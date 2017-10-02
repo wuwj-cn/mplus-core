@@ -8,7 +8,7 @@ public class DataStateConverter implements AttributeConverter<DataState, String>
 
 	@Override
 	public String convertToDatabaseColumn(DataState state) {
-		return state.getName();
+		return state.getCode();
 	}
 
 	@Override
