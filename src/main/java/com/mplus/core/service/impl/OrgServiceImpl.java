@@ -25,6 +25,9 @@ public class OrgServiceImpl implements OrgService {
 
 	@Override
 	public Org saveOrg(Org org) {
+		if (!StringUtils.isEmpty(org.getOrgId())) {
+			throw new RuntimeException("object id is not null or empty");
+		}
 		return orgRepository.save(org);
 	}
 

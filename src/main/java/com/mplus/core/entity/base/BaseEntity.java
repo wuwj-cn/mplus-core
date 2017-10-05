@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.mplus.enums.DataState;
 import com.mplus.enums.DataStateConverter;
 
@@ -15,11 +16,13 @@ public abstract class BaseEntity {
 	@Column(length=64)
 	private String insertBy; // 插入人
 
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	private Date insertAt; // 插入时间
 
 	@Column(length=64)
 	private String updateBy; // 修改人
 
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	private Date updateAt; // 修改时间
 
 	@Column(length=2, nullable = false)
@@ -63,12 +66,24 @@ public abstract class BaseEntity {
 		this.updateAt = updateAt;
 	}
 
+	@JSONField(serialize = false)
 	public DataState getDataState() {
 		return dataState;
 	}
 
+	@JSONField(serialize = false)
 	public void setDataState(DataState dataState) {
 		this.dataState = dataState;
+	}
+	
+	@JSONField(name = "state")
+	public String getState() {
+		return dataState.getCode();
+	}
+	
+	@JSONField(name = "state")
+	public void setState(String code) {
+		this.dataState = DataState.fromString(code);
 	}
 
 }

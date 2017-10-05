@@ -20,6 +20,15 @@ public class OrgServiceTest {
 	@Autowired
 	private OrgService orgService;
 	
+	@Test
+	public void testSaveRoot() {
+		Org root = new Org();
+		root.setOrgCode("0");
+		root.setOrgName("ROOT");
+		root.setParentOrgId(null);
+		orgService.saveOrg(root);
+	}
+	
 	public void testSaveOrg() {
 		Org org = new Org();
 		org.setOrgCode("001100");
@@ -42,7 +51,7 @@ public class OrgServiceTest {
 
 	@Test
 	public void testFindOrgsByParent() {
-		Org parent = orgService.findOneByCode("001100");
+		Org parent = orgService.findOneByCode("0");
 		List<Org> orgs = orgService.findOrgsByParent(parent.getOrgId());
 		assertNotNull(orgs);
 	}

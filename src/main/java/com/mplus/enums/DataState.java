@@ -1,20 +1,18 @@
 package com.mplus.enums;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum DataState {
 	ENABLE("0", "正常"), DELETED("1", "删除");
-	
+
 	private String code;
 	private String name;
 
 	private DataState(String code, String name) {
 		this.code = code;
-		this.name= name;
+		this.name = name;
 	}
 
 	public String getCode() {
@@ -33,15 +31,23 @@ public enum DataState {
 		this.name = name;
 	}
 
-	public static DataState fromString(String code){
-        Objects.requireNonNull(code, "value can not be null");
-        switch (code) {
-        case "0":
-            return DataState.ENABLE;
-        case "1":
-            return DataState.DELETED;
-        default:
-            throw new IllegalArgumentException("code [" + code + "] not supported.");
+	private static final Map<String, DataState> MAP = new HashMap<String, DataState>();
+    static {
+        for (DataState e : DataState.values()) {
+            MAP.put(e.getCode(), e);
         }
     }
+    
+	public static DataState fromString(String code) {
+		Objects.requireNonNull(code, "value can not be null");
+		DataState e = MAP.get(code);
+		if(null == e) throw new IllegalArgumentException("code [" + code + "] not supported.");
+		return e;
+	}
+
+//	@Override
+//	public String toString() {
+//		// "dataState":{"code":"0","name":"正常"}
+//		return "{\"code\":\"" + code + "\", \"name\":\"" + name + "\"}";
+//	}
 }
