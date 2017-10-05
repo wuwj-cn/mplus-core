@@ -14,9 +14,12 @@ public interface UserRepository extends BaseRepository<User, String> {
 	@Query(value = "select u from User u where u.userName = ?1 and u.password = ?2")
 	User find(String username, String password);
 	
-	@Query(value = "select u from User u where u.userName = ?1")
-	User findByUserName(String userName);
+	@Query(value = "select u from User u where u.userName = ?1 and u.dataState = ?2")
+	User findByUserName(String userName, DataState dataState);
 	
 	@Query(value = "from User where dataState = ?2 and org.orgId = ?1")
 	List<User> findByOrg(String orgId, DataState dataState);
+	
+	@Query(value = "from User where dataState = ?2 and userCode = ?1")
+	User findOneByCode(String userCode, DataState dataState);
 }

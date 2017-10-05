@@ -38,4 +38,11 @@ public class OrgController {
 		Org org = orgService.findOneByCode(orgCode);
 		return Result.sucess(org);
 	}
+	
+	@RequestMapping(value = "/getChildren/{orgCode}", method = RequestMethod.GET)
+	public Result getChildren(@PathVariable String orgCode) {
+		Org parent = orgService.findOneByCode(orgCode);
+		List<Org> children = orgService.findOrgsByParent(parent.getOrgId());
+		return Result.sucess(children);
+	}
 }

@@ -7,11 +7,17 @@ import com.mplus.core.entity.User;
 
 public interface UserService {
 
+	User saveUser(User user);
+	
+	User updateUser(User user);
+	
+	void removeUser(User user);
+	
 	User find(String userName, String password);
 	
 	User findByUserName(String userName);
 	
-	void saveUser(User user);
-	
 	List<User> findByOrg(Org org);
+	
+	User findOneByCode(String userCode);
 }
