@@ -12,6 +12,7 @@ import com.mplus.core.entity.Org;
 import com.mplus.core.entity.User;
 import com.mplus.core.repo.UserRepository;
 import com.mplus.core.service.CodeRuleService;
+import com.mplus.core.service.OrgService;
 import com.mplus.core.service.UserService;
 import com.mplus.enums.DataState;
 import com.mplus.enums.RuleCode;
@@ -26,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private CodeRuleService codeRuleService;
+	
+	@Autowired
+	private OrgService orgService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -44,10 +48,18 @@ public class UserServiceImpl implements UserService {
 		if (!StringUtils.isEmpty(user.getUserId())) {
 			throw new RuntimeException("object id is not null or empty");
 		}
+		if (null == user.getOrg().getOrgCode()) {
+			throw new RuntimeException("org code is null");
+		}
+		Org org = orgService.findOneByCode(user.getOrg().getOrgCode());
+		user.setOrg(org);
+		
 		String userCode = codeRuleService.getSerial(RuleCode.USER);
 		user.setUserCode(userCode);
+		
 		String password = MD5Util.MD5Salt(user.getPassword());
 		user.setPassword(password);
+		
 		userRepository.save(user);
 		return user;
 	}

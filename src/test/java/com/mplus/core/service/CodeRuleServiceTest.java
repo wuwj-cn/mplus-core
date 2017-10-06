@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mplus.core.entity.CodeRule;
+import com.mplus.enums.RuleCode;
 import com.mplus.enums.RulePolicy;
 
 @RunWith(SpringRunner.class)
@@ -22,8 +23,8 @@ public class CodeRuleServiceTest {
 	@Test
 	public void testSaveCodeRule() {
 		CodeRule rule = new CodeRule();
-		rule.setRuleCode("001");
-		rule.setRuleName("test");
+		rule.setRuleCode(RuleCode.USER.getCode());
+		rule.setRuleName(RuleCode.USER.getName());
 		rule.setRulePolicy(RulePolicy.SERIAL);
 		rule.setSerialLength(5);
 		rule.setCurrentValue(String.format("%0"+rule.getSerialLength()+"d", 0));

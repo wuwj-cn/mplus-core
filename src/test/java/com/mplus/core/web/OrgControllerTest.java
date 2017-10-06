@@ -9,12 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 import static org.junit.Assert.*;
 
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,11 +23,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.mplus.core.advice.Result;
 import com.mplus.core.entity.Org;
 import com.mplus.core.service.OrgService;
-import com.mplus.enums.DataState;
 
 /**
  * @author wuwj

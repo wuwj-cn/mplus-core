@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.mplus.core.entity.base.BaseEntity;
 import com.mplus.enums.UserState;
 import com.mplus.enums.UserStateConverter;
@@ -60,12 +61,7 @@ public class User extends BaseEntity implements Serializable {
 	private Set<Role> roles = new HashSet<Role>();
 
 	public User() {
-	}
-
-	public User(String username, String password) {
-		super();
-		this.userName = username;
-		this.password = password;
+		this.userState = UserState.ENABLE;
 	}
 
 	public String getUserId() {
@@ -116,12 +112,24 @@ public class User extends BaseEntity implements Serializable {
 		this.email = email;
 	}
 
+	@JSONField(serialize = false)
 	public UserState getUserState() {
 		return userState;
 	}
 
+	@JSONField(serialize = false)
 	public void setUserState(UserState userState) {
 		this.userState = userState;
+	}
+	
+	@JSONField(name = "uState")
+	public String getUState() {
+		return userState.getCode();
+	}
+	
+	@JSONField(name = "uState")
+	public void setUState(String code) {
+		this.userState = UserState.fromString(code);
 	}
 
 	public Org getOrg() {

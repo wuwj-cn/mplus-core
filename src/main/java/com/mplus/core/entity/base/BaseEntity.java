@@ -76,13 +76,13 @@ public abstract class BaseEntity {
 		this.dataState = dataState;
 	}
 	
-	@JSONField(name = "state")
-	public String getState() {
+	@JSONField(name = "dState")
+	public String getDState() {
 		return dataState.getCode();
 	}
 	
-	@JSONField(name = "state")
-	public void setState(String code) {
+	@JSONField(name = "dState")
+	public void setDState(String code) {
 		this.dataState = DataState.fromString(code);
 	}
 

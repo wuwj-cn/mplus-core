@@ -68,7 +68,7 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 		String serial = null;
 		try {
 			lock.readLock().lock();
-			CodeRule rule = codeRuleRespository.findOneByCode(ruleCode.getName(), DataState.ENABLE);
+			CodeRule rule = codeRuleRespository.findOneByCode(ruleCode.getCode(), DataState.ENABLE);
 			if(null == rule) {
 				throw new RuntimeException("not set rule code");
 			}
