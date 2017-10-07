@@ -21,6 +21,9 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 	
 	@Override
 	public Privilege savePrivilege(Privilege privilege) {
+		if (!StringUtils.isEmpty(privilege.getPriviId())) {
+			throw new RuntimeException("object id is not null or empty");
+		}
 		return privilegeRepository.save(privilege);
 	}
 
@@ -35,6 +38,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
 	@Override
 	public void removePrivilege(Privilege privilege) {
+		privilege.setRoles(null);
 		privilege.setDataState(DataState.DELETED);
 		privilege.setUpdateAt(new Date());
 		privilegeRepository.save(privilege);

@@ -10,11 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.mplus.core.entity.base.BaseEntity;
 import com.mplus.enums.PriviType;
 import com.mplus.enums.PriviTypeConverter;
@@ -40,7 +43,12 @@ public class Privilege extends BaseEntity implements Serializable {
 	@Convert(converter = PriviTypeConverter.class)
 	private PriviType priviType;
 	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "MP_ROLE_PRIVI_REL", joinColumns = {
+			@JoinColumn(name = "PRIVI_ID")
+	}, inverseJoinColumns = {
+			@JoinColumn(name = "ROLE_ID")
+	})
 	private Set<Role> roles = new HashSet<Role>();
 	
 	public Privilege() {}
@@ -69,12 +77,24 @@ public class Privilege extends BaseEntity implements Serializable {
 		this.priviName = priviName;
 	}
 
+	@JSONField(serialize = false)
 	public PriviType getPriviType() {
 		return priviType;
 	}
 
+	@JSONField(serialize = false)
 	public void setPriviType(PriviType priviType) {
 		this.priviType = priviType;
+	}
+	
+	@JSONField(name = "ptype")
+	public String getPtype() {
+		return priviType.getCode();
+	}
+	
+	@JSONField(name = "ptype")
+	public void setPtype(String code) {
+		this.priviType = PriviType.fromString(code);
 	}
 
 	public Set<Role> getRoles() {

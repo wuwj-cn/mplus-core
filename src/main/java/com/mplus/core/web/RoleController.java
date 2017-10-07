@@ -33,7 +33,7 @@ public class RoleController {
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public Result remove(@PathVariable String roleCode) {
 		Role role = roleService.findOneByCode(roleCode);
-		roleService.removeRole(role);;
+		roleService.removeRole(role);
 		return Result.sucess(role);
 	}
 	

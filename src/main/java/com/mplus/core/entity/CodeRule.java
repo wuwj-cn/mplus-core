@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.mplus.core.entity.base.BaseEntity;
 import com.mplus.enums.RulePolicy;
 import com.mplus.enums.RulePolicyConverter;
@@ -82,12 +83,24 @@ public class CodeRule extends BaseEntity implements Serializable {
 		this.rulePrefix = rulePrefix;
 	}
 
+	@JSONField(serialize = false)
 	public RulePolicy getRulePolicy() {
 		return rulePolicy;
 	}
 
+	@JSONField(serialize = false)
 	public void setRulePolicy(RulePolicy rulePolicy) {
 		this.rulePolicy = rulePolicy;
+	}
+	
+	@JSONField(name = "policy")
+	public String getPolicy() {
+		return rulePolicy.getCode();
+	}
+	
+	@JSONField(name = "policy")
+	public void setPolicy(String code) {
+		this.rulePolicy = RulePolicy.fromString(code);
 	}
 
 	public Integer getSerialLength() {
