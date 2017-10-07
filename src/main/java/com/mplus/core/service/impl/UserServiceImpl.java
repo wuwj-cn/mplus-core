@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.mplus.core.entity.Org;
+import com.mplus.core.entity.Role;
 import com.mplus.core.entity.User;
 import com.mplus.core.repo.UserRepository;
 import com.mplus.core.service.CodeRuleService;
@@ -92,5 +93,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findOneByCode(String userCode) {
 		return userRepository.findOneByCode(userCode, DataState.ENABLE);
+	}
+	
+	@Override
+	public List<User> findByRole(Role role) {
+		if (null == role) {
+			throw new RuntimeException("role is null");
+		}
+		return userRepository.findByRole(role.getRoleId(), DataState.ENABLE);
 	}
 }

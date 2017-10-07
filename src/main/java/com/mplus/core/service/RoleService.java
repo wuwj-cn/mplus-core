@@ -10,5 +10,5 @@ public interface RoleService {
 	
 	void removeRole(Role role);
 	
-	Role fineOneByCode(String roleCode);
+	Role findOneByCode(String roleCode);
 }

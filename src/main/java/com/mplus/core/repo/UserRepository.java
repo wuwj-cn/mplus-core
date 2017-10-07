@@ -22,4 +22,9 @@ public interface UserRepository extends BaseRepository<User, String> {
 	
 	@Query(value = "from User where dataState = ?2 and userCode = ?1")
 	User findOneByCode(String userCode, DataState dataState);
+	
+	@Query(value = "select u from User u left outer join fetch u.roles r "
+			+ "where u.dataState = r.dataState and u.dataState = ?2 "
+			+ "and r.roleId = ?1")
+	List<User> findByRole(String roleId, DataState dataState);
 }

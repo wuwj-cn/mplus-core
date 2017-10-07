@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public enum RuleCode {
 
-	USER("USER", "用户");
+	USER("USER", "用户"), ROLE("ROLE", "角色");
 	
 	private final String code;
 	private final String name;

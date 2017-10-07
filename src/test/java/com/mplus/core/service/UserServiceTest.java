@@ -1,6 +1,7 @@
 package com.mplus.core.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mplus.core.entity.Org;
+import com.mplus.core.entity.Role;
 import com.mplus.core.entity.User;
 import com.mplus.enums.UserState;
 
@@ -24,6 +26,9 @@ public class UserServiceTest {
 	
 	@Autowired
 	private OrgService orgService;
+	
+	@Autowired
+	private RoleService roleService;
 
 	public void testSaveUser() {
 		User user = new User();
@@ -45,6 +50,13 @@ public class UserServiceTest {
 	public void testFindByOrg(){
 		Org org = orgService.findOneByCode("001101");
 		List<User> users = userService.findByOrg(org);
+		assertNotNull(users);
+	}
+	
+	@Test
+	public void testFindByRole(){
+		Role role = roleService.findOneByCode("00003");
+		List<User> users = userService.findByRole(role);
 		assertNotNull(users);
 	}
 }
