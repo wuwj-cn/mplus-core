@@ -59,4 +59,10 @@ public class UserServiceTest {
 		List<User> users = userService.findByRole(role);
 		assertNotNull(users);
 	}
+	
+	@Test
+	public void testRemoveUser() {
+		User user =  userService.findOneByCode("00004");
+		userService.removeUser(user);
+	}
 }

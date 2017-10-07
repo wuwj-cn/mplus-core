@@ -85,6 +85,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void removeUser(User user) {
+		user.setRoles(null);
 		user.setDataState(DataState.DELETED);
 		user.setUpdateAt(new Date());
 		userRepository.save(user);
