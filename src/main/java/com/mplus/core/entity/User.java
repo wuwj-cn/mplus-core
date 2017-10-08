@@ -39,14 +39,17 @@ public class User extends BaseEntity implements Serializable {
 	private String userCode;
 
 	@Column(length = 100, nullable = false)
-	private String userName;
+	private String username;
 
 	@Column(length = 48)
 	private String password;
 
 	@Column(length = 100)
-	private String zhName;
+	private String name;
 
+	@Column(length = 48)
+	private String salt;//加密密码的盐
+	
 	@Column(length = 50)
 	private String email;
 
@@ -57,13 +60,10 @@ public class User extends BaseEntity implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORG_ID")
 	private Org org;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "MP_USER_ROLE_REL", joinColumns = {
-			@JoinColumn(name = "USER_ID")
-	}, inverseJoinColumns = {
-			@JoinColumn(name = "ROLE_ID")
-	})
+	@JoinTable(name = "MP_USER_ROLE_REL", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "ROLE_ID") })
 	private Set<Role> roles = new HashSet<Role>();
 
 	public User() {
@@ -79,11 +79,11 @@ public class User extends BaseEntity implements Serializable {
 	}
 
 	public String getUserName() {
-		return userName;
+		return username;
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.username = userName;
 	}
 
 	public String getUserCode() {
@@ -103,11 +103,11 @@ public class User extends BaseEntity implements Serializable {
 	}
 
 	public String getZhName() {
-		return zhName;
+		return name;
 	}
 
 	public void setZhName(String zhName) {
-		this.zhName = zhName;
+		this.name = zhName;
 	}
 
 	public String getEmail() {
@@ -127,12 +127,12 @@ public class User extends BaseEntity implements Serializable {
 	public void setUserState(UserState userState) {
 		this.userState = userState;
 	}
-	
+
 	@JSONField(name = "uState")
 	public String getUState() {
 		return userState.getCode();
 	}
-	
+
 	@JSONField(name = "uState")
 	public void setUState(String code) {
 		this.userState = UserState.fromString(code);
@@ -152,6 +152,10 @@ public class User extends BaseEntity implements Serializable {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public String getCredentialsSalt() {
+		return this.username + this.salt;
 	}
 
 }

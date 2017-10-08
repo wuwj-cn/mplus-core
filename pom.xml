@@ -22,6 +22,7 @@
 		<java.version>1.8</java.version>
 		<commons-lang.version>3.3.2</commons-lang.version>
 		<activiti.version>6.0.0</activiti.version>
+		<fastjson.version>1.2.39</fastjson.version>
 	</properties>
 
 	<dependencies>
@@ -37,10 +38,6 @@
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -66,6 +63,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- mysql end -->
 		
@@ -86,8 +84,16 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>1.2.39</version>
+			<version>${fastjson.version}</version>
 		</dependency>
+		
+		<!-- shiro start -->
+		<dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+        <!-- shiro end -->
 	</dependencies>
 
 	<build>
