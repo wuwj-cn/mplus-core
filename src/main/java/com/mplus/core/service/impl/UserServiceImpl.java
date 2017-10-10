@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public User findByUserName(String userName) {
+	public User findByUsername(String userName) {
 		return userRepository.findByUserName(userName, DataState.ENABLE);
 	}
 

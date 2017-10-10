@@ -38,7 +38,7 @@ public class User extends BaseEntity implements Serializable {
 	@Column(length = 20, nullable = false, unique = true)
 	private String userCode;
 
-	@Column(length = 100, nullable = false)
+	@Column(length = 100, nullable = false, unique = true)
 	private String username;
 
 	@Column(length = 48)
@@ -47,7 +47,7 @@ public class User extends BaseEntity implements Serializable {
 	@Column(length = 100)
 	private String name;
 
-	@Column(length = 48)
+	@Column(length = 32)
 	private String salt;//加密密码的盐
 	
 	@Column(length = 50)
@@ -78,12 +78,12 @@ public class User extends BaseEntity implements Serializable {
 		this.userId = userId;
 	}
 
-	public String getUserName() {
+	public String getUsername() {
 		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.username = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getUserCode() {
@@ -102,12 +102,20 @@ public class User extends BaseEntity implements Serializable {
 		this.password = MD5Util.MD5Salt(password);
 	}
 
-	public String getZhName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setZhName(String zhName) {
-		this.name = zhName;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 	public String getEmail() {

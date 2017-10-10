@@ -14,9 +14,9 @@ public interface UserService {
 	
 	void removeUser(User user);
 	
-	User find(String userName, String password);
+	User find(String username, String password);
 	
-	User findByUserName(String userName);
+	User findByUsername(String username);
 	
 	List<User> findByOrg(Org org);
 	

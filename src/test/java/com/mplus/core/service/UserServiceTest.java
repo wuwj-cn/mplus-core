@@ -32,7 +32,7 @@ public class UserServiceTest {
 
 	public void testSaveUser() {
 		User user = new User();
-		user.setUserName("wuwj");
+		user.setUsername("wuwj");
 		user.setPassword("123456");
 		user.setUserState(UserState.ENABLE);
 		Org org = orgService.findOneByCode("001101");
@@ -42,7 +42,7 @@ public class UserServiceTest {
 
 	public void testFindByUserName() {
 		// 该测试用例在懒加载情况下执行会出现no session异常
-		User user = userService.findByUserName("wuwj");
+		User user = userService.findByUsername("wuwj");
 		assertArrayEquals(new Object[]{"001101"}, new Object[]{user.getOrg().getOrgCode()});
 	}
 	

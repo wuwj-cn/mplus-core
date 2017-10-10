@@ -23,13 +23,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		final User cUser = userService.findByUserName(username);
+		final User cUser = userService.findByUsername(username);
 		if (cUser == null) {
 			throw new UsernameNotFoundException(username + " cannot be found");
 		}
 		final Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority("USER")); // 此处设置用户角色为USER,只是为了简单对应起来
-		return new org.springframework.security.core.userdetails.User(cUser.getUserName(), cUser.getPassword(),
+		return new org.springframework.security.core.userdetails.User(cUser.getUsername(), cUser.getPassword(),
 				authorities);
 	}
 

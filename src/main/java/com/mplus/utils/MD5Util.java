@@ -13,7 +13,7 @@ public class MD5Util {
 	/**
 	 * 普通MD5
 	 */
-	public static String MD5(String password) {
+	public static String MD5(String text) {
 		MessageDigest md5 = null;
 		try {
 			md5 = MessageDigest.getInstance("MD5");
@@ -23,7 +23,7 @@ public class MD5Util {
 			e.printStackTrace();
 			return "";
 		}
-		char[] charArray = password.toCharArray();
+		char[] charArray = text.toCharArray();
 		byte[] byteArray = new byte[charArray.length];
 
 		for (int i = 0; i < charArray.length; i++)
@@ -40,9 +40,9 @@ public class MD5Util {
 	}
 
 	/**
-	 * 加盐MD5，盐值与密码混淆
+	 * 盐值MD5
 	 */
-	public static String MD5Salt(String password) {
+	public static String MD5Salt(String text) {
 		Random r = new Random();
 		StringBuilder sb = new StringBuilder(16);
 		sb.append(r.nextInt(99999999)).append(r.nextInt(99999999));
@@ -53,21 +53,22 @@ public class MD5Util {
 			}
 		}
 		String salt = sb.toString();
-		password = md5Hex(password + salt);
-		char[] cs = new char[48];
-		for (int i = 0; i < 48; i += 3) {
-			cs[i] = password.charAt(i / 3 * 2);
-			char c = salt.charAt(i / 3);
-			cs[i + 1] = c;
-			cs[i + 2] = password.charAt(i / 3 * 2 + 1);
-		}
-		return new String(cs);
+//		text = md5Hex(text + salt);
+//		char[] cs = new char[48];
+//		for (int i = 0; i < 48; i += 3) {
+//			cs[i] = text.charAt(i / 3 * 2);
+//			char c = salt.charAt(i / 3);
+//			cs[i + 1] = c;
+//			cs[i + 2] = text.charAt(i / 3 * 2 + 1);
+//		}
+//		return new String(cs);
+		return md5Hex(salt);
 	}
 
 	/**
 	 * 校验加盐后是否和原文一致
 	 */
-	public static boolean verify(String password, String md5) {
+	public static boolean verify(String text, String md5) {
 		char[] cs1 = new char[32];
 		char[] cs2 = new char[16];
 		for (int i = 0; i < 48; i += 3) {
@@ -76,7 +77,7 @@ public class MD5Util {
 			cs2[i / 3] = md5.charAt(i + 1);
 		}
 		String salt = new String(cs2);
-		return md5Hex(password + salt).equals(new String(cs1));
+		return md5Hex(text + salt).equals(new String(cs1));
 	}
 
 	/**
