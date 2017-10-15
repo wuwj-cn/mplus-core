@@ -47,6 +47,17 @@ public class OrgControllerTest {
 	public void setUp() throws Exception {
 		mvc = webAppContextSetup(context).build();
 	}
+	
+	@Test
+	public void testAddRoot() throws Exception {
+		Org org = new Org();
+		org.setOrgCode("0");
+		org.setOrgName("根节点");
+		org.setParentOrgId(null);
+		String jsonOrg = JSON.toJSONString(org);
+		this.mvc.perform(post("/org/add").contentType(MediaType.APPLICATION_JSON_UTF8).content(jsonOrg))
+				.andExpect(status().isOk()).andDo(print()).andReturn().getResponse().getContentAsString();
+	}
 
 	@Test
 	public void testAdd() throws Exception {

@@ -49,7 +49,7 @@ public class Role extends BaseEntity implements Serializable {
 	}, inverseJoinColumns = {
 			@JoinColumn(name = "PRIVI_ID")
 	})
-	private Set<Privilege> privileges = new HashSet<Privilege>();
+	private Set<Permission> privileges = new HashSet<Permission>();
 	
 	public Role() {
 	}
@@ -81,11 +81,11 @@ public class Role extends BaseEntity implements Serializable {
 		this.users = users;
 	}
 
-	public Set<Privilege> getPrivileges() {
+	public Set<Permission> getPrivileges() {
 		return privileges;
 	}
 
-	public void setPrivileges(Set<Privilege> privileges) {
+	public void setPrivileges(Set<Permission> privileges) {
 		this.privileges = privileges;
 	}
 }

@@ -1,13 +1,15 @@
 package com.mplus.utils;
 
-import java.util.Random;
-import org.apache.commons.codec.binary.Hex;
-import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Random;
+
+import org.apache.shiro.codec.Hex;
 
 /**
  * MD5工具类，加盐
  */
+@Deprecated
 public class MD5Util {
 
 	/**

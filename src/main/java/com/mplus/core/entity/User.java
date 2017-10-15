@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -22,7 +23,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.mplus.core.entity.base.BaseEntity;
 import com.mplus.enums.UserState;
 import com.mplus.enums.UserStateConverter;
-import com.mplus.utils.MD5Util;
 
 @Entity
 @Table(name = "MP_USER")
@@ -65,6 +65,9 @@ public class User extends BaseEntity implements Serializable {
 	@JoinTable(name = "MP_USER_ROLE_REL", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "ROLE_ID") })
 	private Set<Role> roles = new HashSet<Role>();
+	
+	@Transient
+	private Boolean rememberMe;
 
 	public User() {
 		this.userState = UserState.ENABLE;
@@ -99,7 +102,7 @@ public class User extends BaseEntity implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		this.password = MD5Util.MD5Salt(password);
+		this.password = password;
 	}
 
 	public String getName() {
@@ -160,6 +163,14 @@ public class User extends BaseEntity implements Serializable {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Boolean getRememberMe() {
+		return rememberMe;
+	}
+
+	public void setRememberMe(Boolean rememberMe) {
+		this.rememberMe = rememberMe;
 	}
 
 	public String getCredentialsSalt() {

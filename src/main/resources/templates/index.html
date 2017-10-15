@@ -1,24 +1,42 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-	layout:decorator="layout">
+	xmlns:th="http://www.thymeleaf.org" >
 <head>
-<title>Spring Security入门</title>
+<title>mplus-core</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
-<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" 
-	data-appid="101365710" data-redirecturi="http://www.51drclub.com/api/oauth/qq/callback.php" charset="utf-8"></script>
+<!-- <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js"  -->
+<!-- 	data-appid="101365710" data-redirecturi="http://www.51drclub.com/api/oauth/qq/callback.php" charset="utf-8"></script> -->
 <body>
-	<h1 layout:fragment="header">《Activiti实战》第7章《Activiti与容器集成》</h1>
-    <div layout:fragment="content" class="container">
-    	<p>点击 <a th:href="@{/hello}">这里</a> 打个招呼吧</p>
-		<div>With Facebook: <a href="/login/facebook">click here</a></div>
-		<div>With Github: <a href="/login/github">click here</a></div>
-	    <span id="qqLoginBtn"></span>
-	    <script type="text/javascript">
-		    QC.Login({ btnId:"qqLoginBtn" }); //插入按钮的节点id 
-		</script>
-    </div>
-    
+<!-- 	<h1 layout:fragment="header">《Activiti实战》第7章《Activiti与容器集成》</h1> -->
+<!--     <div layout:fragment="content" class="container"> -->
+<!--     	<p>点击 <a th:href="@{/hello}">这里</a> 打个招呼吧</p> -->
+<!-- 		<div>With Facebook: <a href="/login/facebook">click here</a></div> -->
+<!-- 		<div>With Github: <a href="/login/github">click here</a></div> -->
+<!-- 	    <span id="qqLoginBtn"></span> -->
+<!-- 	    <script type="text/javascript"> -->
+<!--  		    QC.Login({ btnId:"qqLoginBtn" }); //插入按钮的节点id  -->
+<!-- 		</script> -->
+<!--     </div> -->
+    <div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<form role="form">
+					<div class="form-group">
+						<label for="username">username: </label> 
+						<input type="text" class="form-control" id="username" />
+					</div>
+					<div class="form-group">
+						<label for="password"> Password </label> 
+						<input type="password" class="form-control" id="password" />
+					</div>
+					<div class="checkbox">
+						<label> <input type="checkbox" /> rememberMe </label>
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

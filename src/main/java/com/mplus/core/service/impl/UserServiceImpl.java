@@ -17,6 +17,7 @@ import com.mplus.core.service.OrgService;
 import com.mplus.core.service.UserService;
 import com.mplus.enums.DataState;
 import com.mplus.enums.RuleCode;
+import com.mplus.utils.EncryptUtil;
 import com.mplus.utils.MD5Util;
 
 @Service
@@ -58,8 +59,8 @@ public class UserServiceImpl implements UserService {
 		String userCode = codeRuleService.getSerial(RuleCode.USER);
 		user.setUserCode(userCode);
 		
-		String password = MD5Util.MD5Salt(user.getPassword());
-		user.setPassword(password);
+		//对用户进行散列加密
+		EncryptUtil.encrypt(user);
 		
 		userRepository.save(user);
 		return user;

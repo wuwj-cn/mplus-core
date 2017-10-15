@@ -23,6 +23,7 @@
 		<commons-lang.version>3.3.2</commons-lang.version>
 		<activiti.version>6.0.0</activiti.version>
 		<fastjson.version>1.2.39</fastjson.version>
+		<shiro.version>1.4.0</shiro.version>
 	</properties>
 
 	<dependencies>
@@ -31,14 +32,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.boot</groupId> -->
+<!-- 			<artifactId>spring-boot-starter-security</artifactId> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.springframework.security.oauth</groupId> -->
+<!-- 			<artifactId>spring-security-oauth2</artifactId> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -91,8 +92,13 @@
 		<dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
-            <version>1.4.0</version>
+            <version>${shiro.version}</version>
         </dependency>
+        <dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
         <!-- shiro end -->
 	</dependencies>
 
