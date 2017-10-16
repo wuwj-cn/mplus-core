@@ -1,17 +1,20 @@
 package com.mplus.core.web;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
+import static org.junit.Assert.*;
+import static org.easymock.EasyMock.*;
 
+import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.subject.support.SubjectThreadState;
+import org.apache.shiro.util.ThreadContext;
 import org.apache.shiro.util.ThreadState;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -20,13 +23,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.mplus.AbstractShiroTest;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class LoginControllerTest {
+public class LoginControllerTest extends AbstractShiroTest {
 
 	private MockMvc mvc;
-	private ThreadState _threadState;
-	protected Subject _mockSubject;
 
 	@Autowired
 	private WebApplicationContext context;
@@ -34,20 +37,26 @@ public class LoginControllerTest {
 	@Before
 	public void setUp() throws Exception {
 		mvc = webAppContextSetup(context).build();
-		_mockSubject = Mockito.mock(Subject.class);
-        _threadState = new SubjectThreadState(_mockSubject);
-        _threadState.bind();
-	}
-	
-	@Test
-	public void testLogin() throws Exception {
-		// {"userName": "wuwj", "password": "123455", "rememberMe": "false"}
-		String requestBody = "{\"username\": \"wuwj\", \"password\": \"123455\", \"rememberMe\": \"false\"}";
-		this.mvc.perform(post("/login")
-						.contentType(MediaType.APPLICATION_JSON_UTF8)
-						.content(requestBody))
-				.andExpect(status().isOk())
-				.andDo(print());
 	}
 
+	@Test
+	public void testLogin() throws Exception {
+		// 1. Create a mock authenticated Subject instance for the test to run:
+		Subject subjectUnderTest = createNiceMock(Subject.class);
+		expect(subjectUnderTest.isAuthenticated()).andReturn(true);
+
+		// 2. Bind the subject to the current thread:
+		setSubject(subjectUnderTest);
+
+		// {"userName": "wuwj", "password": "123455", "rememberMe": "false"}
+		String requestBody = "{\"username\": \"wuwj\", \"password\": \"123455\", \"rememberMe\": \"false\"}";
+		this.mvc.perform(post("/login").contentType(MediaType.APPLICATION_JSON_UTF8).content(requestBody))
+				.andExpect(status().isOk()).andDo(print());
+	}
+
+	@After
+	public void tearDownSubject() {
+		// 3. Unbind the subject from the current thread:
+		clearSubject();
+	}
 }

@@ -14,14 +14,16 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import com.mplus.core.shiro.RetryLimitHashedCredentialsMatcher;
 import com.mplus.core.shiro.ShiroRealm;
 import com.mplus.utils.EncryptUtil;
 
-@Configuration
+//@Configuration
 public class ShiroConfig {
 	private static final Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
 
@@ -48,20 +50,25 @@ public class ShiroConfig {
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 		// 配置不会被拦截的链接 顺序判断
 		filterChainDefinitionMap.put("/", "anon");
+		filterChainDefinitionMap.put("/index", "anon");
+		filterChainDefinitionMap.put("/favicon.ico", "anon");
 		filterChainDefinitionMap.put("/static/**", "anon");
+		filterChainDefinitionMap.put("/templates/**", "anon");
 		filterChainDefinitionMap.put("/activiti/**", "anon");
+		
 		// 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
 		filterChainDefinitionMap.put("/logout", "logout");
+		
 		//配置记住我或认证通过可以访问的地址
-        filterChainDefinitionMap.put("/index", "user");
+//        filterChainDefinitionMap.put("/index", "user");
 		// <!-- 过滤链定义，从上向下顺序执行，一般将/**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
 		// <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
 		filterChainDefinitionMap.put("/**", "authc");
 		
 		// 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-		shiroFilterFactoryBean.setLoginUrl("/login");
+		shiroFilterFactoryBean.setLoginUrl("/");
 		// 登录成功后要跳转的链接
-		shiroFilterFactoryBean.setSuccessUrl("/index");
+		shiroFilterFactoryBean.setSuccessUrl("/activiti/processes");
 		// 未授权界面;
 		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 		
@@ -69,15 +76,15 @@ public class ShiroConfig {
 		return shiroFilterFactoryBean;
 	}
 	
-//	@Bean
-//	public FilterRegistrationBean delegatingFilterProxy(){
-//	    FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-//	    DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-//	    proxy.setTargetFilterLifecycle(true);
-//	    proxy.setTargetBeanName("shiroFilter");
-//	    filterRegistrationBean.setFilter(proxy);
-//	    return filterRegistrationBean;
-//	}
+	@Bean
+	public FilterRegistrationBean delegatingFilterProxy(){
+	    FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+	    DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+	    proxy.setTargetFilterLifecycle(true);
+	    proxy.setTargetBeanName("shiroFilter");
+	    filterRegistrationBean.setFilter(proxy);
+	    return filterRegistrationBean;
+	}
 
 	@Bean
 	public EhCacheManager ehCacheManager() {
@@ -123,8 +130,8 @@ public class ShiroConfig {
 	public SimpleCookie rememberMeCookie() {
 		// 这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
 		SimpleCookie cookie = new SimpleCookie("rememberMe");
-		// <!-- 记住我cookie生效时间30天 ,单位秒;-->
-		cookie.setMaxAge(30 * 24 * 3600);
+		// <!-- 记住我cookie生效时间 ,单位秒;-->
+		cookie.setMaxAge(60);
 		return cookie;
 	}
 

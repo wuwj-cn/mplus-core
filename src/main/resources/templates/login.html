@@ -1,36 +1,48 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
 <head>
 <title>登录</title>
- <link rel="stylesheet"
-          th:href="@{/css/bootstrap.min.css}"
-          href="../../css/bootstrap.min.css"/>
+<script type="text/javascript" src="@{js/jquery-1.7.2.js}"></script>
+<script type="text/javascript">
+$("#submit").click(function(){
+	$.ajax({
+	    url:'/login',
+	    type:'POST', //GET
+	    async:true,    //或false,是否异步
+	    data:{
+	        username: $("#username").value,
+	        password: $("#password").value
+	    },
+	    timeout:5000,    //超时时间
+	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+	    beforeSend:function(xhr){
+	        console.log(xhr)
+	        console.log('发送前')
+	    },
+	    success:function(data,textStatus,jqXHR){
+	        console.log(data)
+	        console.log(textStatus)
+	        console.log(jqXHR)
+	    },
+	    error:function(xhr,textStatus){
+	        console.log('错误')
+	        console.log(xhr)
+	        console.log(textStatus)
+	    },
+	    complete:function(){
+	        console.log('结束')
+	    }
+	})
+});
+</script>
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<form role="form">
-					<div class="form-group">
-						<label for="exampleInputEmail1"> Email address </label> <input
-							type="email" class="form-control" id="exampleInputEmail1" />
-					</div>
-					<div class="form-group">
-
-						<label for="exampleInputPassword1"> Password </label> <input
-							type="password" class="form-control" id="exampleInputPassword1" />
-					</div>
-					<div class="checkbox">
-
-						<label> <input type="checkbox" /> Check me out
-						</label>
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				</form>
-			</div>
-		</div>
+	<div>
+		<form action="/login" method="post">
+			username: <input type="text" name="username" /> 
+			password: <input type="password" name="password" />
+			<button name="submit">submit</button>
+		</form>
 	</div>
 </body>
 </html>
