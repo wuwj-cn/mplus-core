@@ -20,7 +20,7 @@ import com.mplus.core.entity.Role;
 import com.mplus.core.entity.User;
 import com.mplus.core.service.UserService;
 
-//@Component
+@Component
 public class ShiroRealm extends AuthorizingRealm {
 	private static final Logger logger = LoggerFactory.getLogger(ShiroRealm.class);
 	

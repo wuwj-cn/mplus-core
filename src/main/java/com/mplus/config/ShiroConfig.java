@@ -23,7 +23,7 @@ import com.mplus.core.shiro.RetryLimitHashedCredentialsMatcher;
 import com.mplus.core.shiro.ShiroRealm;
 import com.mplus.utils.EncryptUtil;
 
-//@Configuration
+@Configuration
 public class ShiroConfig {
 	private static final Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
 
@@ -33,12 +33,13 @@ public class ShiroConfig {
 	}
 	
 	@Bean
-	public SecurityManager securityManager() {
-		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-		securityManager.setRealm(shiroRealm());
-		securityManager.setCacheManager(ehCacheManager());
-		securityManager.setRememberMeManager(rememberMeManager());
-		return securityManager;
+	public FilterRegistrationBean delegatingFilterProxy(){
+	    FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+	    DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+	    proxy.setTargetFilterLifecycle(true);
+	    proxy.setTargetBeanName("shiroFilter");
+	    filterRegistrationBean.setFilter(proxy);
+	    return filterRegistrationBean;
 	}
 	
 	@Bean(name = "shiroFilter")
@@ -66,7 +67,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/**", "authc");
 		
 		// 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-		shiroFilterFactoryBean.setLoginUrl("/");
+		shiroFilterFactoryBean.setLoginUrl("/login");
 		// 登录成功后要跳转的链接
 		shiroFilterFactoryBean.setSuccessUrl("/activiti/processes");
 		// 未授权界面;
@@ -76,16 +77,6 @@ public class ShiroConfig {
 		return shiroFilterFactoryBean;
 	}
 	
-	@Bean
-	public FilterRegistrationBean delegatingFilterProxy(){
-	    FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-	    DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-	    proxy.setTargetFilterLifecycle(true);
-	    proxy.setTargetBeanName("shiroFilter");
-	    filterRegistrationBean.setFilter(proxy);
-	    return filterRegistrationBean;
-	}
-
 	@Bean
 	public EhCacheManager ehCacheManager() {
 		EhCacheManager em = new EhCacheManager();
@@ -99,6 +90,15 @@ public class ShiroConfig {
 		realm.setCacheManager(ehCacheManager());
 		realm.setCredentialsMatcher(hashedCredentialsMatcher());
 		return realm;
+	}
+	
+	@Bean
+	public SecurityManager securityManager() {
+		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+		securityManager.setRealm(shiroRealm());
+		securityManager.setCacheManager(ehCacheManager());
+		securityManager.setRememberMeManager(rememberMeManager());
+		return securityManager;
 	}
 
 	/**

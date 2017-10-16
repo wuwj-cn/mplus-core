@@ -1,48 +1,53 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>登录</title>
-<script type="text/javascript" src="@{js/jquery-1.7.2.js}"></script>
+<script type="text/javascript" src="../../js/jquery-1.7.2.js"></script>
 <script type="text/javascript">
-$("#submit").click(function(){
-	$.ajax({
-	    url:'/login',
-	    type:'POST', //GET
-	    async:true,    //或false,是否异步
-	    data:{
-	        username: $("#username").value,
-	        password: $("#password").value
-	    },
-	    timeout:5000,    //超时时间
-	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
-	    beforeSend:function(xhr){
-	        console.log(xhr)
-	        console.log('发送前')
-	    },
-	    success:function(data,textStatus,jqXHR){
-	        console.log(data)
-	        console.log(textStatus)
-	        console.log(jqXHR)
-	    },
-	    error:function(xhr,textStatus){
-	        console.log('错误')
-	        console.log(xhr)
-	        console.log(textStatus)
-	    },
-	    complete:function(){
-	        console.log('结束')
-	    }
-	})
-});
+	$(document).ready(function() {
+		$("#submit").click(function() {
+			var data = JSON.stringify({
+				username : $("#username").val(),
+				password : $("#password").val()
+			});
+			$.ajax({
+				url : '/login',
+				type : 'POST', //GET
+				async : true, //或false,是否异步
+				contentType : 'application/json; charset=UTF-8',
+				data : data,
+				timeout : 5000, //超时时间
+				dataType : 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+				beforeSend : function(xhr) {
+					console.log(xhr)
+					console.log('发送前')
+				},
+				success : function(data, textStatus, jqXHR) {
+					console.log(data)
+					console.log(textStatus)
+					console.log(jqXHR)
+				},
+				error : function(xhr, textStatus) {
+					console.log('错误')
+					console.log(xhr)
+					console.log(textStatus)
+				},
+				complete : function() {
+					console.log('结束')
+				}
+			})
+		});
+	});
 </script>
 </head>
 <body>
 	<div>
-		<form action="/login" method="post">
-			username: <input type="text" name="username" /> 
-			password: <input type="password" name="password" />
-			<button name="submit">submit</button>
+		<form>
+			username: <input type="text" name="username" id="username" />
+			password: <input type="password" name="password" id="password" />
 		</form>
+		<button name="submit" id="submit">submit</button>
 	</div>
 </body>
 </html>
