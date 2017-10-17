@@ -30,6 +30,7 @@ public class UserServiceTest {
 	@Autowired
 	private RoleService roleService;
 
+	@Test
 	public void testSaveUser() {
 		User user = new User();
 		user.setUsername("wuwj");

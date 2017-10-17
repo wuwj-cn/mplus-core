@@ -29,6 +29,7 @@ public class OrgServiceTest {
 		orgService.saveOrg(root);
 	}
 	
+	@Test
 	public void testSaveOrg() {
 		Org org = new Org();
 		org.setOrgCode("001100");

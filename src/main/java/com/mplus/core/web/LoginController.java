@@ -38,15 +38,12 @@ public class LoginController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/login")
 	public Result login(@RequestBody User user, HttpServletRequest request) {
 		String host = request.getRemoteHost();
 		String username = user.getUsername();
 		String password = user.getPassword();
 		Boolean rememberMe = user.getRememberMe();
-		
-//		String username = request.getParameter("username");
-//		String password = request.getParameter("password");
 		
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password, false, host);
 		// 获取当前的Subject
@@ -62,11 +59,9 @@ public class LoginController {
 		if (currentUser.isAuthenticated()) {
 			logger.info("用户[" + username + "]登录认证通过");
 			return Result.sucess(token);
-//			return "processes";
 		} else {
 			token.clear();
-			return Result.failure(null);
-//			return "index";
+			return Result.failure("用户[" + username + "]登录认证未通过");
 		}
 	}
 	

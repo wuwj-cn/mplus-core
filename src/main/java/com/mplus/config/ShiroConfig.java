@@ -32,16 +32,16 @@ public class ShiroConfig {
 		return new LifecycleBeanPostProcessor();
 	}
 	
-	@Bean
-	public FilterRegistrationBean delegatingFilterProxy(){
-	    FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-	    DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-	    proxy.setTargetFilterLifecycle(true);
-	    proxy.setTargetBeanName("shiroFilter");
-	    filterRegistrationBean.setFilter(proxy);
-	    return filterRegistrationBean;
-	}
-	
+//	@Bean
+//	public FilterRegistrationBean delegatingFilterProxy(){
+//	    FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+//	    DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+//	    proxy.setTargetFilterLifecycle(true);
+//	    proxy.setTargetBeanName("shiroFilter");
+//	    filterRegistrationBean.setFilter(proxy);
+//	    return filterRegistrationBean;
+//	}
+//	
 	@Bean(name = "shiroFilter")
 	public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
 		logger.info("ShiroConfiguration.shirFilter()");
@@ -51,11 +51,14 @@ public class ShiroConfig {
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 		// 配置不会被拦截的链接 顺序判断
 		filterChainDefinitionMap.put("/", "anon");
+		filterChainDefinitionMap.put("/login", "anon");
 		filterChainDefinitionMap.put("/index", "anon");
 		filterChainDefinitionMap.put("/favicon.ico", "anon");
 		filterChainDefinitionMap.put("/static/**", "anon");
-		filterChainDefinitionMap.put("/templates/**", "anon");
-		filterChainDefinitionMap.put("/activiti/**", "anon");
+		filterChainDefinitionMap.put("/js/**", "anon");
+		filterChainDefinitionMap.put("/css/**", "anon");
+		filterChainDefinitionMap.put("/images/**", "anon");
+//		filterChainDefinitionMap.put("/activiti/**", "anon");
 		
 		// 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
 		filterChainDefinitionMap.put("/logout", "logout");
@@ -67,7 +70,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/**", "authc");
 		
 		// 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-		shiroFilterFactoryBean.setLoginUrl("/login");
+		shiroFilterFactoryBean.setLoginUrl("/");
 		// 登录成功后要跳转的链接
 		shiroFilterFactoryBean.setSuccessUrl("/activiti/processes");
 		// 未授权界面;
