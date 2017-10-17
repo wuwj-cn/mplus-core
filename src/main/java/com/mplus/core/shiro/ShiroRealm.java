@@ -4,7 +4,6 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -37,7 +36,7 @@ public class ShiroRealm extends AuthorizingRealm {
 		User user = (User) principals.getPrimaryPrincipal();
 		for (Role role : user.getRoles()) {
 			authorizationInfo.addRole(role.getRoleCode());
-			for (Permission p : role.getPrivileges()) {
+			for (Permission p : role.getPermissions()) {
 				authorizationInfo.addStringPermission(p.getPermissionCode());
 			}
 		}

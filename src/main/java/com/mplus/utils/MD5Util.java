@@ -85,6 +85,7 @@ public class MD5Util {
 	/**
 	 * 获取十六进制字符串形式的MD5摘要
 	 */
+	@SuppressWarnings("static-access")
 	private static String md5Hex(String src) {
 		try {
 			MessageDigest md5 = MessageDigest.getInstance("MD5");

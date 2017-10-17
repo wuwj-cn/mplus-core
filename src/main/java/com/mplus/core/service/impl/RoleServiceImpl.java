@@ -46,7 +46,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public void removeRole(Role role) {
 		role.setUsers(null); // remove all user
-		role.setPrivileges(null); // remove all privilege
+		role.setPermissions(null); // remove all permissions
 		role.setDataState(DataState.DELETED);
 		role.setUpdateAt(new Date());
 		roleRepository.save(role);

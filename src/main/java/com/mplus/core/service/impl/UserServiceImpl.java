@@ -18,7 +18,6 @@ import com.mplus.core.service.UserService;
 import com.mplus.enums.DataState;
 import com.mplus.enums.RuleCode;
 import com.mplus.utils.EncryptUtil;
-import com.mplus.utils.MD5Util;
 
 @Service
 @Transactional
@@ -32,12 +31,6 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private OrgService orgService;
-
-	@Override
-	@Transactional(readOnly = true)
-	public User find(String userName, String password) {
-		return userRepository.find(userName, MD5Util.MD5Salt(password));
-	}
 
 	@Override
 	@Transactional(readOnly = true)

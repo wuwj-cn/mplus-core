@@ -7,10 +7,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 import static org.junit.Assert.*;
 import static org.easymock.EasyMock.*;
 
-import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.ThreadContext;
-import org.apache.shiro.util.ThreadState;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,8 +47,9 @@ public class LoginControllerTest extends AbstractShiroTest {
 
 		// {"userName": "wuwj", "password": "123455", "rememberMe": "false"}
 		String requestBody = "{\"username\": \"wuwj\", \"password\": \"123455\", \"rememberMe\": \"false\"}";
-		this.mvc.perform(post("/login").contentType(MediaType.APPLICATION_JSON_UTF8).content(requestBody))
-				.andExpect(status().isOk()).andDo(print());
+		String result = this.mvc.perform(post("/login").contentType(MediaType.APPLICATION_JSON_UTF8).content(requestBody))
+										.andExpect(status().isOk()).andDo(print()).andReturn().getResponse().getContentAsString();
+		assertNotNull(result);;
 	}
 
 	@After

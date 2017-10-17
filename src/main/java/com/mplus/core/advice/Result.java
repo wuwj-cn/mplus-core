@@ -1,10 +1,6 @@
 package com.mplus.core.advice;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class Result {
-	private static final Logger logger = LoggerFactory.getLogger(Result.class);
 
 	private boolean success;
 	private Object data;

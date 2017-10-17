@@ -11,9 +11,6 @@ import com.mplus.enums.DataState;
 @Repository
 public interface UserRepository extends BaseRepository<User, String> {
 
-	@Query(value = "select u from User u where u.username = ?1 and u.password = ?2")
-	User find(String username, String password);
-	
 	@Query(value = "select u from User u where u.username = ?1 and u.dataState = ?2")
 	User findByUserName(String username, DataState dataState);
 	
