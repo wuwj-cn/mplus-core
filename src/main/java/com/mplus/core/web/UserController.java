@@ -15,6 +15,9 @@ import com.mplus.core.entity.User;
 import com.mplus.core.service.OrgService;
 import com.mplus.core.service.UserService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -25,18 +28,24 @@ public class UserController {
 	@Autowired
 	private OrgService orgService;
 	
+	@ApiOperation(value="添加用户", notes="根据User对象创建新用户")
+	@ApiImplicitParam(name = "user", value = "用户实体信息", required = true, dataType = "User")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Result add(@RequestBody User user) {
 		userService.saveUser(user);
 		return Result.sucess(user);	
 	}
 	
+	@ApiOperation(value="更新用户", notes="根据User对象更新用户信息")
+	@ApiImplicitParam(name = "user", value = "用户实体信息", required = true, dataType = "User")
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public Result update(@RequestBody User user) {
 		userService.updateUser(user);
 		return Result.sucess(user);
 	}
 	
+	@ApiOperation(value="删除用户", notes="根据userCode来删除用户")
+	@ApiImplicitParam(name = "userCode", value = "用户编码", required = true, dataType = "String", paramType = "path")
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public Result remove(@PathVariable String userCode) {
 		User user = userService.findOneByCode(userCode);
