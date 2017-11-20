@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mplus.core.advice.Result;
@@ -19,23 +20,23 @@ import com.mplus.core.entity.User;
 public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-	@RequestMapping(value = "/index")
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index() {
 		return "index";
 	}
 	
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/", method = RequestMethod.GET)
     public String entry() {
         return "login";
     }
 
-	@RequestMapping(value = "/qc_callback")
+	@RequestMapping(value = "/qc_callback", method = RequestMethod.GET)
 	public String hello() {
 		return "qc_callback";
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/login")
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public Result login(@RequestBody User user, HttpServletRequest request) {
 		String host = request.getRemoteHost();
 		String username = user.getUsername();
@@ -63,7 +64,7 @@ public class LoginController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/403")
+	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public Result unauthorized() {
 		return Result.failure(null);
 	}
