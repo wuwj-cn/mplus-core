@@ -36,7 +36,7 @@ public class LoginController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public Result login(@RequestBody User user, HttpServletRequest request) {
 		String host = request.getRemoteHost();
 		String username = user.getUsername();
