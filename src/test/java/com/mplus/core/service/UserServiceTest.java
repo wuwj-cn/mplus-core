@@ -17,8 +17,8 @@ import com.mplus.core.entity.Role;
 import com.mplus.core.entity.User;
 import com.mplus.enums.UserState;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 public class UserServiceTest {
 	
 	@Autowired
@@ -30,7 +30,7 @@ public class UserServiceTest {
 	@Autowired
 	private RoleService roleService;
 
-//	@Test
+	@Test
 	public void testSaveUser() {
 		User user = new User();
 		user.setUsername("wuwj");
@@ -47,21 +47,21 @@ public class UserServiceTest {
 		assertArrayEquals(new Object[]{"001101"}, new Object[]{user.getOrg().getOrgCode()});
 	}
 	
-//	@Test
+	@Test
 	public void testFindByOrg(){
 		Org org = orgService.findOneByCode("001101");
 		List<User> users = userService.findByOrg(org);
 		assertNotNull(users);
 	}
 	
-//	@Test
+	@Test
 	public void testFindByRole(){
 		Role role = roleService.findOneByCode("00003");
 		List<User> users = userService.findByRole(role);
 		assertNotNull(users);
 	}
 	
-//	@Test
+	@Test
 	public void testRemoveUser() {
 		User user =  userService.findOneByCode("00004");
 		userService.removeUser(user);

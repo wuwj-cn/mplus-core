@@ -12,14 +12,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.mplus.core.entity.CodeRule;
 import com.mplus.core.service.CodeRuleService;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 public class RuleUtilTest {
 
 	@Autowired
 	private CodeRuleService codeRuleService;
 	
-//	@Test
+	@Test
 	public void testSerial() {
 		CodeRule rule = codeRuleService.findOneByCode("SERIAL_DATE");
 		String serial = RuleUtil.getSerial(rule);

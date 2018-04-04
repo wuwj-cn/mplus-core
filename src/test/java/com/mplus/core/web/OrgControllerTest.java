@@ -28,8 +28,8 @@ import com.mplus.core.service.OrgService;
  * @author wuwj
  *
  */
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class OrgControllerTest {
 
 	@Autowired
@@ -45,7 +45,7 @@ public class OrgControllerTest {
 		mvc = webAppContextSetup(context).build();
 	}
 	
-//	@Test
+	@Test
 	public void testAddRoot() throws Exception {
 		Org org = new Org();
 		org.setOrgCode("0");
@@ -56,7 +56,7 @@ public class OrgControllerTest {
 				.andExpect(status().isOk()).andDo(print()).andReturn().getResponse().getContentAsString();
 	}
 
-//	@Test
+	@Test
 	public void testAdd() throws Exception {
 		Org root = orgService.findOneByCode("0");
 		Org org = new Org();
@@ -68,20 +68,20 @@ public class OrgControllerTest {
 				.andExpect(status().isOk()).andDo(print()).andReturn().getResponse().getContentAsString();
 	}
 
-//	@Test
+	@Test
 	public void testAdd2() throws Exception {
 		String requestBody = "{\"orgCode\":\"001301\",\"orgName\":\"001301\",\"parentOrgId\":\"402880e95eecd190015eecd214540000\",\"state\":\"1\"}";
 		this.mvc.perform(post("/org/add").contentType(MediaType.APPLICATION_JSON_UTF8).content(requestBody))
 				.andExpect(status().isOk()).andDo(print());
 	}
 
-//	@Test
+	@Test
 	public void testGetAll() throws Exception {
 		this.mvc.perform(get("/org/getAll").contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andDo(print()).andReturn().getResponse().getContentAsString();
 	}
 
-//	@Test
+	@Test
 	public void testGetOneByCode() throws Exception {
 		this.mvc.perform(get("/org/getOne/001103").contentType(MediaType.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk()).andDo(print());
