@@ -32,16 +32,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-security</artifactId> -->
-<!-- 			<optional>true</optional> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.security.oauth</groupId> -->
-<!-- 			<artifactId>spring-security-oauth2</artifactId> -->
-<!-- 			<optional>true</optional> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.boot</groupId> -->
+		<!-- <artifactId>spring-boot-starter-security</artifactId> -->
+		<!-- <optional>true</optional> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.security.oauth</groupId> -->
+		<!-- <artifactId>spring-security-oauth2</artifactId> -->
+		<!-- <optional>true</optional> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -77,26 +77,26 @@
 			<version>${activiti.version}</version>
 		</dependency>
 		<!-- rest api -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.activiti</groupId> -->
-<!-- 			<artifactId>activiti-rest</artifactId> -->
-<!-- 			<exclusions> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>org.slf4j</groupId> -->
-<!-- 					<artifactId>slf4j-api</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 				<exclusion> -->
-<!-- 					<groupId>org.slf4j</groupId> -->
-<!-- 					<artifactId>slf4j-log4j12</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
-<!-- 			<version>${activiti.version}</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.activiti</groupId> -->
-<!-- 			<artifactId>activiti-common-rest</artifactId> -->
-<!-- 			<version>${activiti.version}</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.activiti</groupId> -->
+		<!-- <artifactId>activiti-rest</artifactId> -->
+		<!-- <exclusions> -->
+		<!-- <exclusion> -->
+		<!-- <groupId>org.slf4j</groupId> -->
+		<!-- <artifactId>slf4j-api</artifactId> -->
+		<!-- </exclusion> -->
+		<!-- <exclusion> -->
+		<!-- <groupId>org.slf4j</groupId> -->
+		<!-- <artifactId>slf4j-log4j12</artifactId> -->
+		<!-- </exclusion> -->
+		<!-- </exclusions> -->
+		<!-- <version>${activiti.version}</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.activiti</groupId> -->
+		<!-- <artifactId>activiti-common-rest</artifactId> -->
+		<!-- <version>${activiti.version}</version> -->
+		<!-- </dependency> -->
 		<!-- activiti end -->
 
 		<dependency>
@@ -123,13 +123,13 @@
 			<version>${shiro.version}</version>
 		</dependency>
 		<!-- shiro end -->
-		
+
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.6.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
@@ -145,11 +145,39 @@
 	</dependencies>
 
 	<build>
+		<!-- 将项目打包成mplus.war自动部署到tomcat服务器的webapps目录下面 -->
+		<finalName>mplus</finalName>
 		<plugins>
+<!-- 			<plugin> -->
+<!-- 				<groupId>org.springframework.boot</groupId> -->
+<!-- 				<artifactId>spring-boot-maven-plugin</artifactId> -->
+<!-- 			</plugin> -->
+			<!-- 利用cargo插件把项目部署到远程的tomcat容器中 -->
 			<plugin>
-				<!-- package project -->
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.2.3</version>
+				<configuration>
+					<container>
+						<!-- 指明使用的tomcat服务器版本 -->
+						<containerId>tomcat8x</containerId>
+						<type>remote</type>
+					</container>
+					<configuration>
+						<type>runtime</type>
+						<cargo.remote.username>admin</cargo.remote.username>
+						<cargo.remote.password>admin</cargo.remote.password>
+						<cargo.tomcat.manager.url>http://123.207.61.221:8080/manager</cargo.tomcat.manager.url>
+					</configuration>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>deploy</phase>
+						<goals>
+							<goal>redeploy</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
