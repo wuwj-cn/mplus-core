@@ -17,6 +17,7 @@ import com.mplus.core.advice.Result;
 import com.mplus.core.entity.User;
 
 @Controller
+@RequestMapping(value = "/api")
 public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 

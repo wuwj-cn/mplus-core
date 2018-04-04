@@ -97,10 +97,12 @@ public class User extends BaseEntity implements Serializable {
 		this.userCode = userCode;
 	}
 
+	@JSONField(serialize = false)
 	public String getPassword() {
 		return password;
 	}
 
+	@JSONField(serialize = false)
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -113,10 +115,12 @@ public class User extends BaseEntity implements Serializable {
 		this.name = name;
 	}
 
+	@JSONField(serialize = false)
 	public String getSalt() {
 		return salt;
 	}
 
+	@JSONField(serialize = false)
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
@@ -173,6 +177,7 @@ public class User extends BaseEntity implements Serializable {
 		this.rememberMe = rememberMe;
 	}
 
+	@JSONField(serialize = false)
 	public String getCredentialsSalt() {
 		return this.username + this.salt;
 	}
