@@ -22,8 +22,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.mplus.AbstractShiroTest;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class LoginControllerTest extends AbstractShiroTest {
 
 	private MockMvc mvc;
@@ -36,7 +36,7 @@ public class LoginControllerTest extends AbstractShiroTest {
 		mvc = webAppContextSetup(context).build();
 	}
 
-	@Test
+//	@Test
 	public void testLogin() throws Exception {
 		// 1. Create a mock authenticated Subject instance for the test to run:
 		Subject subjectUnderTest = createNiceMock(Subject.class);
@@ -52,7 +52,7 @@ public class LoginControllerTest extends AbstractShiroTest {
 		assertNotNull(result);;
 	}
 
-	@After
+//	@After
 	public void tearDownSubject() {
 		// 3. Unbind the subject from the current thread:
 		clearSubject();
