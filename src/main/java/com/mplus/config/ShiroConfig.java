@@ -60,7 +60,6 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/api/", "anon");
 		filterChainDefinitionMap.put("/api/login", "anon");
 		filterChainDefinitionMap.put("/api/index", "anon");
-		filterChainDefinitionMap.put("/swagger*", "anon");
 		
 		// 配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
 		filterChainDefinitionMap.put("/logout", "logout");
@@ -72,7 +71,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/**", "authc");
 		
 		// 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-		shiroFilterFactoryBean.setLoginUrl("/");
+		shiroFilterFactoryBean.setLoginUrl("/api/");
 		// 登录成功后要跳转的链接
 		shiroFilterFactoryBean.setSuccessUrl("/activiti/processes");
 		// 未授权界面;
