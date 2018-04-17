@@ -167,7 +167,7 @@
 						<type>runtime</type>
 						<cargo.remote.username>mplus</cargo.remote.username>
 						<cargo.remote.password>cool04433@</cargo.remote.password>
-						<cargo.tomcat.manager.url>http://123.207.61.221:8080/manager</cargo.tomcat.manager.url>
+						<cargo.tomcat.manager.url>http://127.0.0.1:8080/manager</cargo.tomcat.manager.url>
 					</configuration>
 				</configuration>
 				<executions>
