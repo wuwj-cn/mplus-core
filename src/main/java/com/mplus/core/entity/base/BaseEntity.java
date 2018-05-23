@@ -34,34 +34,42 @@ public abstract class BaseEntity {
 		this.dataState = DataState.ENABLE;
 	}
 
+	@JSONField(serialize = false)
 	public String getInsertBy() {
 		return insertBy;
 	}
 
+	@JSONField(serialize = false)
 	public void setInsertBy(String insertBy) {
 		this.insertBy = insertBy;
 	}
 
+	@JSONField(serialize = false)
 	public Date getInsertAt() {
 		return insertAt;
 	}
 
+	@JSONField(serialize = false)
 	public void setInsertAt(Date insertAt) {
 		this.insertAt = insertAt;
 	}
 
+	@JSONField(serialize = false)
 	public String getUpdateBy() {
 		return updateBy;
 	}
 
+	@JSONField(serialize = false)
 	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
 
+	@JSONField(serialize = false)
 	public Date getUpdateAt() {
 		return updateAt;
 	}
 
+	@JSONField(serialize = false)
 	public void setUpdateAt(Date updateAt) {
 		this.updateAt = updateAt;
 	}
