@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mplus.core.advice.Result;
 import com.mplus.core.entity.User;
+import com.mplus.enums.ResponseStatus;
 
 @Controller
 @RequestMapping(value = "/api")
@@ -60,14 +61,14 @@ public class LoginController {
 			return Result.sucess(token);
 		} else {
 			token.clear();
-			return Result.failure("用户[" + username + "]登录认证未通过");
+			return Result.failure(ResponseStatus.AUTH_NOT_PASSED.value(), ResponseStatus.AUTH_NOT_PASSED.getDesc());
 		}
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public Result unauthorized() {
-		return Result.failure(null);
+		return Result.failure(ResponseStatus.AUTH_NOT_PASSED.value(), ResponseStatus.AUTH_NOT_PASSED.getDesc());
 	}
 
 }

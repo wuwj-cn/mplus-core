@@ -23,7 +23,7 @@ public class ExceptionAdvice {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public Result handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
 		logger.error("参数解析失败", e);
-		return Result.failure("could_not_read_json");
+		return Result.failure(HttpStatus.BAD_REQUEST.value(), e.getMessage());
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class ExceptionAdvice {
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public Result handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
 		logger.error("不支持当前请求方法", e);
-		return Result.failure("request_method_not_supported");
+		return Result.failure(HttpStatus.METHOD_NOT_ALLOWED.value(), e.getMessage());
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class ExceptionAdvice {
 	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
 	public Result handleHttpMediaTypeNotSupportedException(Exception e) {
 		logger.error("不支持当前媒体类型", e);
-		return Result.failure("content_type_not_supported");
+		return Result.failure(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(), e.getMessage());
 	}
 
 	/**
@@ -53,6 +53,6 @@ public class ExceptionAdvice {
 	@ExceptionHandler(Exception.class)
 	public Result handleException(Exception e) {
 		logger.error("服务运行异常", e);
-		return Result.failure(e.getMessage());
+		return Result.failure(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
 	}
 }
