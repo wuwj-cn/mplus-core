@@ -3,7 +3,6 @@ package com.mplus.core.service;
 import java.util.List;
 
 import com.mplus.core.entity.Menu;
-import com.mplus.core.entity.Org;
 
 public interface MenuService {
 
@@ -15,6 +14,6 @@ public interface MenuService {
 	
 	Menu findOneByCode(String menuCode);
 	
-	List<Org> findMenusByParent(String parentMenuId);
+	List<Menu> findMenusByParent(String parentMenuId);
 	
 }
