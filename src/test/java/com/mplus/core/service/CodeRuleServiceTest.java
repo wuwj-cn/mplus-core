@@ -1,6 +1,7 @@
 package com.mplus.core.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,9 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.mplus.core.entity.CodeRule;
 import com.mplus.enums.RuleCode;
 import com.mplus.enums.RulePolicy;
+import com.mplus.modules.sys.entity.CodeRule;
+import com.mplus.modules.sys.service.CodeRuleService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)

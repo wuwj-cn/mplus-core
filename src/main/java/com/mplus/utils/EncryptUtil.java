@@ -5,7 +5,7 @@ import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 
-import com.mplus.core.entity.User;
+import com.mplus.modules.sys.entity.User;
 
 public class EncryptUtil {
 	// 随机数生成器

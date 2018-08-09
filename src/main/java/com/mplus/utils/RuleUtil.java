@@ -6,8 +6,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.util.StringUtils;
 
-import com.mplus.core.entity.CodeRule;
 import com.mplus.enums.RulePolicy;
+import com.mplus.modules.sys.entity.CodeRule;
 
 /**
  * 编码规则工具类

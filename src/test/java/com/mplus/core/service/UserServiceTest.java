@@ -12,10 +12,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.mplus.core.entity.Org;
-import com.mplus.core.entity.Role;
-import com.mplus.core.entity.User;
 import com.mplus.enums.UserState;
+import com.mplus.modules.sys.entity.Org;
+import com.mplus.modules.sys.entity.Role;
+import com.mplus.modules.sys.entity.User;
+import com.mplus.modules.sys.service.OrgService;
+import com.mplus.modules.sys.service.RoleService;
+import com.mplus.modules.sys.service.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)

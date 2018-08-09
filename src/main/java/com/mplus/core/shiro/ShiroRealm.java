@@ -14,10 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mplus.core.entity.Permission;
-import com.mplus.core.entity.Role;
-import com.mplus.core.entity.User;
-import com.mplus.core.service.UserService;
+import com.mplus.modules.sys.entity.Permission;
+import com.mplus.modules.sys.entity.Role;
+import com.mplus.modules.sys.entity.User;
+import com.mplus.modules.sys.service.UserService;
 
 @Component
 public class ShiroRealm extends AuthorizingRealm {
