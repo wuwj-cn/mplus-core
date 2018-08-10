@@ -112,8 +112,8 @@ public class ShiroConfig {
 	@Bean
 	public HashedCredentialsMatcher hashedCredentialsMatcher() {
 		RetryLimitHashedCredentialsMatcher hashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher(ehCacheManager());
-		hashedCredentialsMatcher.setHashAlgorithmName(EncryptUtil.algorithmName);// 散列算法
-		hashedCredentialsMatcher.setHashIterations(EncryptUtil.hashIterations);// 散列的次数
+		hashedCredentialsMatcher.setHashAlgorithmName(EncryptUtil.HASH_ALGORITHM);// 散列算法
+		hashedCredentialsMatcher.setHashIterations(EncryptUtil.HASH_INTERATIONS);// 散列的次数
 		return hashedCredentialsMatcher;
 	}
 

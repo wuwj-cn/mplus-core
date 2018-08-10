@@ -1,31 +1,34 @@
 package com.mplus.utils;
 
-import org.apache.shiro.crypto.RandomNumberGenerator;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.util.ByteSource;
-
-import com.mplus.modules.sys.entity.User;
+import com.mplus.core.security.Digests;
 
 public class EncryptUtil {
-	// 随机数生成器
-	private static RandomNumberGenerator randomNumberGenerator = new SecureRandomNumberGenerator();
 
-	// 指定散列算法为md5
-	public static final String algorithmName = "MD5";
-	// 散列迭代次数
-	public static final int hashIterations = 5;
+	public static final String HASH_ALGORITHM = "SHA-1";
+	public static final int HASH_INTERATIONS = 1024;
+	public static final int SALT_SIZE = 8;
 
 	/**
-	 * 生成随机盐值对密码进行加密
-	 * @param user 登录识别串（用户名）
-	 * @return
+	 * 生成安全的密码，生成随机的16位salt并经过1024次 sha-1 hash
 	 */
-	public static User encrypt(User user) {
-		user.setSalt(randomNumberGenerator.nextBytes().toHex());
-		String encryptPwd = new SimpleHash(algorithmName, user.getPassword(),
-				ByteSource.Util.bytes(user.getCredentialsSalt()), hashIterations).toHex();
-		user.setPassword(encryptPwd);
-		return user;
+	public static String encryptPassword(String plainPassword) {
+		String plain = Encodes.unescapeHtml(plainPassword);
+		byte[] salt = Digests.generateSalt(SALT_SIZE);
+		byte[] hashPassword = Digests.sha1(plain.getBytes(), salt, HASH_INTERATIONS);
+		return Encodes.encodeHex(salt)+Encodes.encodeHex(hashPassword);
 	}
+	
+	/**
+	 * 验证密码
+	 * @param plainPassword 明文密码
+	 * @param password 密文密码
+	 * @return 验证成功返回true
+	 */
+	public static boolean validatePassword(String plainPassword, String password) {
+		String plain = Encodes.unescapeHtml(plainPassword);
+		byte[] salt = Encodes.decodeHex(password.substring(0,16));
+		byte[] hashPassword = Digests.sha1(plain.getBytes(), salt, HASH_INTERATIONS);
+		return password.equals(Encodes.encodeHex(salt)+Encodes.encodeHex(hashPassword));
+	}
+	
 }

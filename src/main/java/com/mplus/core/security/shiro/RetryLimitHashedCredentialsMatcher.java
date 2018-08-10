@@ -1,4 +1,4 @@
-package com.mplus.core.shiro;
+package com.mplus.core.security.shiro;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

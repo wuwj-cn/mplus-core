@@ -20,6 +20,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mplus.core.entity.base.BaseEntity;
 import com.mplus.enums.UserState;
 import com.mplus.enums.UserStateConverter;
@@ -47,9 +48,6 @@ public class User extends BaseEntity implements Serializable {
 	@Column(length = 100)
 	private String name;
 
-	@Column(length = 32)
-	private String salt;//加密密码的盐
-	
 	@Column(length = 50)
 	private String email;
 
@@ -115,16 +113,6 @@ public class User extends BaseEntity implements Serializable {
 		this.name = name;
 	}
 
-	@JSONField(serialize = false)
-	public String getSalt() {
-		return salt;
-	}
-
-	@JSONField(serialize = false)
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -179,7 +167,7 @@ public class User extends BaseEntity implements Serializable {
 
 	@JSONField(serialize = false)
 	public String getCredentialsSalt() {
-		return this.username + this.salt;
+		return this.password.substring(0, 16);
 	}
 
 }

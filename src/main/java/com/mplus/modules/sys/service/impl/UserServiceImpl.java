@@ -53,7 +53,8 @@ public class UserServiceImpl implements UserService {
 		user.setUserCode(userCode);
 		
 		//对用户进行散列加密
-		EncryptUtil.encrypt(user);
+		String hashPassword = EncryptUtil.encryptPassword(user.getPassword());
+		user.setPassword(hashPassword);
 		
 		userRepository.save(user);
 		return user;

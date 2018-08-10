@@ -1,4 +1,4 @@
-package com.mplus.core.shiro;
+package com.mplus.core.security.shiro;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -59,7 +59,7 @@ public class ShiroRealm extends AuthorizingRealm {
 		} 
 		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user, // 用户名
 				user.getPassword(), // 密码
-				ByteSource.Util.bytes(user.getCredentialsSalt()), // salt=username+salt
+				ByteSource.Util.bytes(user.getCredentialsSalt()), // salt
 				getName() // realm name
 		);
 		return authenticationInfo;
