@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.mplus.core.shiro.RetryLimitHashedCredentialsMatcher;
-import com.mplus.core.shiro.ShiroRealm;
+import com.mplus.core.security.shiro.RetryLimitHashedCredentialsMatcher;
+import com.mplus.core.security.shiro.ShiroRealm;
 import com.mplus.utils.EncryptUtil;
 
 @Configuration
