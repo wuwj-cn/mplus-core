@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.mplus.enums.DataState;
+import com.mplus.enums.Status;
 import com.mplus.modules.sys.entity.Menu;
 import com.mplus.modules.sys.repo.MenuRepository;
 import com.mplus.modules.sys.service.MenuService;
@@ -22,7 +22,7 @@ public class MenuServiceImpl implements MenuService {
 	
 	@Override
 	public Menu saveMenu(Menu menu) {
-		if (!StringUtils.isEmpty(menu.getMenuId())) {
+		if (!StringUtils.isEmpty(menu.getId())) {
 			throw new RuntimeException("object id is not null or empty");
 		}
 		return menuRepository.save(menu);
@@ -30,30 +30,28 @@ public class MenuServiceImpl implements MenuService {
 
 	@Override
 	public Menu updateMenu(Menu menu) {
-		if (StringUtils.isEmpty(menu.getMenuId())) {
+		if (StringUtils.isEmpty(menu.getId())) {
 			throw new RuntimeException("object id is null or empty");
 		}
-		menu.setUpdateAt(new Date());
 		return menuRepository.save(menu);
 	}
 
 	@Override
 	public void removeOrg(Menu menu) {
-		menu.setDataState(DataState.DELETED);
-		menu.setUpdateAt(new Date());
+		menu.setStatus(Status.DELETED.getCode());
 		menuRepository.save(menu);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Menu findOneByCode(String menuCode) {
-		return menuRepository.findOneByCode(menuCode, DataState.ENABLE);
+		return menuRepository.findOneByCode(menuCode, Status.NORMAL.getCode());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Menu> findMenusByParent(String parentMenuId) {
-		return menuRepository.findMenusByParent(parentMenuId, DataState.ENABLE);
+		return menuRepository.findMenusByParent(parentMenuId, Status.NORMAL.getCode());
 	}
 
 }

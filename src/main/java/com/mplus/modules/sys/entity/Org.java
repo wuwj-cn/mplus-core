@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.mplus.core.entity.base.BaseEntity;
+import com.mplus.core.base.entity.BaseEntity;
 
 /**
  * @author wuwj
@@ -24,12 +24,6 @@ import com.mplus.core.entity.base.BaseEntity;
 public class Org extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -5221776501169665796L;
 	
-	@Id
-    @Column(length=64)
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid",strategy="uuid")
-	private String orgId;
-	
 	@Column(length=20, nullable = false, unique = true)
 	private String orgCode;
 	
@@ -37,20 +31,12 @@ public class Org extends BaseEntity implements Serializable {
 	private String orgName;
 	
 	@Column(length=64)
-	private String parentOrgId;
+	private String parentId;
 	
 	@Column(length=255)
 	private String remark;
 	
 	public Org(){}
-
-	public String getOrgId() {
-		return orgId;
-	}
-
-	public void setOrgId(String orgId) {
-		this.orgId = orgId;
-	}
 
 	public String getOrgCode() {
 		return orgCode;
@@ -68,12 +54,12 @@ public class Org extends BaseEntity implements Serializable {
 		this.orgName = orgName;
 	}
 
-	public String getParentOrgId() {
-		return parentOrgId;
+	public String getParentId() {
+		return parentId;
 	}
 
-	public void setParentOrgId(String parentOrgId) {
-		this.parentOrgId = parentOrgId;
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 
 	public String getRemark() {

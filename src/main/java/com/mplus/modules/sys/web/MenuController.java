@@ -29,7 +29,7 @@ public class MenuController {
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
 	public Result getAll() {
 		Menu parent = menuService.findOneByCode("0");
-		List<Menu> menus = menuService.findMenusByParent(parent.getMenuId());
+		List<Menu> menus = menuService.findMenusByParent(parent.getId());
 		return Result.sucess(menus);
 	}
 	
@@ -42,7 +42,7 @@ public class MenuController {
 	@RequestMapping(value = "/getChildren/{menuCode}", method = RequestMethod.GET)
 	public Result getChildren(@PathVariable String menuCode) {
 		Menu parent = menuService.findOneByCode(menuCode);
-		List<Menu> children = menuService.findMenusByParent(parent.getMenuId());
+		List<Menu> children = menuService.findMenusByParent(parent.getId());
 		return Result.sucess(children);
 	}
 }

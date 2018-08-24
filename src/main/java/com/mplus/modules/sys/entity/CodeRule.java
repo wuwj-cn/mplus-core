@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.mplus.core.entity.base.BaseEntity;
+import com.mplus.core.base.entity.BaseEntity;
 import com.mplus.enums.RulePolicy;
 import com.mplus.enums.RulePolicyConverter;
 
@@ -20,12 +20,6 @@ import com.mplus.enums.RulePolicyConverter;
 @Table(name = "MP_SYS_CODE_RULE")
 public class CodeRule extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -4498917973674072910L;
-	
-	@Id
-    @Column(length=64)
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid",strategy="uuid")
-	private String ruleId;
 	
 	@Column(length=20, nullable = false)
 	private String ruleCode;
@@ -50,14 +44,6 @@ public class CodeRule extends BaseEntity implements Serializable {
 	private String remark;
 	
 	public CodeRule() {}
-
-	public String getRuleId() {
-		return ruleId;
-	}
-
-	public void setRuleId(String ruleId) {
-		this.ruleId = ruleId;
-	}
 
 	public String getRuleCode() {
 		return ruleCode;

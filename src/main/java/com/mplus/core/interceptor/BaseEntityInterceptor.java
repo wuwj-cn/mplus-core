@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mplus.core.entity.base.BaseEntity;
+import com.mplus.core.base.entity.BaseEntity;
 
 @Component
 public class BaseEntityInterceptor extends EmptyInterceptor {
@@ -20,7 +20,8 @@ public class BaseEntityInterceptor extends EmptyInterceptor {
 	public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
 		logger.info("onSave interceptor...");
 		if(id != null) {
-			((BaseEntity) entity).setUpdateAt(new Date());
+			((BaseEntity) entity).setUpdateDate(new Date());
+//			((BaseEntity) entity).setUpdateBy(UserUti);
 		}
 		return super.onSave(entity, id, state, propertyNames, types);
 	}

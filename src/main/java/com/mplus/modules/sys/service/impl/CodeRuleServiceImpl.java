@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.mplus.enums.DataState;
+import com.mplus.enums.Status;
 import com.mplus.enums.RuleCode;
 import com.mplus.modules.sys.entity.CodeRule;
 import com.mplus.modules.sys.repo.CodeRuleRepository;
@@ -26,7 +26,7 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 
 	@Override
 	public CodeRule saveCodeRule(CodeRule rule) {
-		CodeRule r = codeRuleRespository.findOneByCode(rule.getRuleCode(), DataState.ENABLE);
+		CodeRule r = codeRuleRespository.findOneByCode(rule.getRuleCode(), Status.NORMAL.getCode());
 		if (r != null) {
 			throw new RuntimeException("规则编码已存在");
 		}
@@ -36,18 +36,16 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 
 	@Override
 	public CodeRule updateCodeRule(CodeRule rule) {
-		if (StringUtils.isEmpty(rule.getRuleId())) {
+		if (StringUtils.isEmpty(rule.getId())) {
 			throw new RuntimeException("object id is null or empty");
 		}
-		rule.setUpdateAt(new Date());
 		codeRuleRespository.save(rule);
 		return rule;
 	}
 
 	@Override
 	public void removeCodeRule(CodeRule rule) {
-		rule.setDataState(DataState.DELETED);
-		rule.setUpdateAt(new Date());
+		rule.setStatus(Status.DELETED.getCode());
 		codeRuleRespository.save(rule);
 	}
 
@@ -58,7 +56,7 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 
 	@Override
 	public CodeRule findOneByCode(String ruleCode) {
-		return codeRuleRespository.findOneByCode(ruleCode, DataState.ENABLE);
+		return codeRuleRespository.findOneByCode(ruleCode, Status.NORMAL.getCode());
 	}
 
 	/**
@@ -68,7 +66,7 @@ public class CodeRuleServiceImpl implements CodeRuleService {
 		String serial = null;
 		try {
 			lock.readLock().lock();
-			CodeRule rule = codeRuleRespository.findOneByCode(ruleCode.getCode(), DataState.ENABLE);
+			CodeRule rule = codeRuleRespository.findOneByCode(ruleCode.getCode(), Status.NORMAL.getCode());
 			if(null == rule) {
 				throw new RuntimeException("not set rule code");
 			}

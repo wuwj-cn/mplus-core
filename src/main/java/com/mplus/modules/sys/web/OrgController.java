@@ -29,7 +29,7 @@ public class OrgController {
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
 	public Result getAll() {
 		Org parent = orgService.findOneByCode("0");
-		List<Org> orgs = orgService.findOrgsByParent(parent.getOrgId());
+		List<Org> orgs = orgService.findOrgsByParent(parent.getId());
 		return Result.sucess(orgs);
 	}
 	
@@ -42,7 +42,7 @@ public class OrgController {
 	@RequestMapping(value = "/getChildren/{orgCode}", method = RequestMethod.GET)
 	public Result getChildren(@PathVariable String orgCode) {
 		Org parent = orgService.findOneByCode(orgCode);
-		List<Org> children = orgService.findOrgsByParent(parent.getOrgId());
+		List<Org> children = orgService.findOrgsByParent(parent.getId());
 		return Result.sucess(children);
 	}
 }

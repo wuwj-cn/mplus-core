@@ -26,7 +26,7 @@ public class OrgServiceTest {
 		Org root = new Org();
 		root.setOrgCode("0");
 		root.setOrgName("ROOT");
-		root.setParentOrgId(null);
+		root.setParentId(null);
 		orgService.saveOrg(root);
 	}
 	
@@ -35,26 +35,26 @@ public class OrgServiceTest {
 		Org org = new Org();
 		org.setOrgCode("001100");
 		org.setOrgName("莫克工作室");
-		org.setParentOrgId(null);
+		org.setParentId(null);
 		orgService.saveOrg(org);
 		
 		Org child1 = new Org();
 		child1.setOrgCode("001101");
 		child1.setOrgName("研发组");
-		child1.setParentOrgId(org.getOrgId());
+		child1.setParentId(org.getId());
 		orgService.saveOrg(child1);
 		
 		Org child2 = new Org();
 		child2.setOrgCode("001102");
 		child2.setOrgName("产品组");
-		child2.setParentOrgId(org.getOrgId());
+		child2.setParentId(org.getId());
 		orgService.saveOrg(child2);
 	}
 
 	@Test
 	public void testFindOrgsByParent() {
 		Org parent = orgService.findOneByCode("0");
-		List<Org> orgs = orgService.findOrgsByParent(parent.getOrgId());
+		List<Org> orgs = orgService.findOrgsByParent(parent.getId());
 		assertNotNull(orgs);
 	}
 

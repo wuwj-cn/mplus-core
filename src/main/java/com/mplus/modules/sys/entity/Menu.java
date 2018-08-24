@@ -10,18 +10,12 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.mplus.core.entity.base.BaseEntity;
+import com.mplus.core.base.entity.BaseEntity;
 
 @Entity
 @Table(name = "MP_SYS_MENU")
 public class Menu extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 5001754947956101113L;
-
-	@Id
-	@Column(length = 64)
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	private String menuId;
 
 	@Column(length = 20, nullable = false, unique = true)
 	private String menuCode;
@@ -36,15 +30,7 @@ public class Menu extends BaseEntity implements Serializable {
 	private String icon;
 	
 	@Column(length=64)
-	private String parentMenuId;
-
-	public String getMenuId() {
-		return menuId;
-	}
-
-	public void setMenuId(String menuId) {
-		this.menuId = menuId;
-	}
+	private String parentId;
 
 	public String getMenuCode() {
 		return menuCode;
@@ -78,13 +64,11 @@ public class Menu extends BaseEntity implements Serializable {
 		this.icon = icon;
 	}
 
-	public String getParentMenuId() {
-		return parentMenuId;
+	public String getParentId() {
+		return parentId;
 	}
 
-	public void setParentMenuId(String parentMenuId) {
-		this.parentMenuId = parentMenuId;
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
-
-	
 }

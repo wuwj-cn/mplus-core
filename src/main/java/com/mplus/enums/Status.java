@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public enum DataState {
-	ENABLE("0", "正常"), DELETED("1", "删除");
+public enum Status {
+	NORMAL("0", "正常"), DELETED("1", "删除"), DISABLED("2", "停用");
 
 	private String code;
 	private String name;
 
-	private DataState(String code, String name) {
+	private Status(String code, String name) {
 		this.code = code;
 		this.name = name;
 	}
@@ -31,16 +31,16 @@ public enum DataState {
 		this.name = name;
 	}
 
-	private static final Map<String, DataState> MAP = new HashMap<String, DataState>();
+	private static final Map<String, Status> MAP = new HashMap<String, Status>();
     static {
-        for (DataState e : DataState.values()) {
+        for (Status e : Status.values()) {
             MAP.put(e.getCode(), e);
         }
     }
     
-	public static DataState fromString(String code) {
+	public static Status fromString(String code) {
 		Objects.requireNonNull(code, "value can not be null");
-		DataState e = MAP.get(code);
+		Status e = MAP.get(code);
 		if(null == e) throw new IllegalArgumentException("code [" + code + "] not supported.");
 		return e;
 	}

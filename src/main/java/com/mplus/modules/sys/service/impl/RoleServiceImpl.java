@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.mplus.enums.DataState;
+import com.mplus.enums.Status;
 import com.mplus.enums.RuleCode;
 import com.mplus.modules.sys.entity.Role;
 import com.mplus.modules.sys.repo.RoleRepository;
@@ -26,7 +26,7 @@ public class RoleServiceImpl implements RoleService {
 	
 	@Override
 	public Role saveRole(Role role) {
-		if (!StringUtils.isEmpty(role.getRoleId())) {
+		if (!StringUtils.isEmpty(role.getId())) {
 			throw new RuntimeException("object id is not null or empty");
 		}
 		String roleCode = codeRuleService.getSerial(RuleCode.ROLE);
@@ -36,10 +36,9 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public Role updateRole(Role role) {
-		if (StringUtils.isEmpty(role.getRoleId())) {
+		if (StringUtils.isEmpty(role.getId())) {
 			throw new RuntimeException("object id is null or empty");
 		}
-		role.setUpdateAt(new Date());
 		return roleRepository.save(role);
 	}
 
@@ -47,14 +46,13 @@ public class RoleServiceImpl implements RoleService {
 	public void removeRole(Role role) {
 		role.setUsers(null); // remove all user
 		role.setPermissions(null); // remove all permissions
-		role.setDataState(DataState.DELETED);
-		role.setUpdateAt(new Date());
+		role.setStatus(Status.DELETED.getCode());
 		roleRepository.save(role);
 	}
 
 	@Override
 	public Role findOneByCode(String roleCode) {
-		return roleRepository.findOneByCode(roleCode, DataState.ENABLE);
+		return roleRepository.findOneByCode(roleCode, Status.NORMAL.getCode());
 	}
 
 }

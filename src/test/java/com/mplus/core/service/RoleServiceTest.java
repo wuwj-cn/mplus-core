@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.mplus.enums.DataState;
+import com.mplus.enums.Status;
 import com.mplus.modules.sys.entity.Role;
 import com.mplus.modules.sys.entity.User;
 import com.mplus.modules.sys.service.RoleService;
@@ -37,14 +37,14 @@ public class RoleServiceTest {
 		users.add(userService.findOneByCode("00004"));
 		role.setUsers(users);
 		roleService.saveRole(role);
-		assertNotNull(role.getRoleId());
+		assertNotNull(role.getId());
 	}
 	
 	@Test
 	public void testRemoveRole() {
 		Role role = roleService.findOneByCode("00004");
 		roleService.removeRole(role);;
-		assertEquals(DataState.DELETED, role.getDataState());
+		assertEquals(Status.DELETED.getCode(), role.getStatus());
 	}
 
 }

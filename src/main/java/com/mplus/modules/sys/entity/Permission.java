@@ -18,7 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.mplus.core.entity.base.BaseEntity;
+import com.mplus.core.base.entity.BaseEntity;
 import com.mplus.enums.PermissionType;
 import com.mplus.enums.PermissionTypeConverter;
 
@@ -26,12 +26,6 @@ import com.mplus.enums.PermissionTypeConverter;
 @Table(name = "MP_SYS_PERMISSION")
 public class Permission extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -7748357850803156457L;
-
-	@Id
-    @Column(length=64)
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid",strategy="uuid")
-	private String permissionId;
 	
 	@Column(length=20, nullable = false, unique = true)
 	private String permissionCode;
@@ -44,7 +38,7 @@ public class Permission extends BaseEntity implements Serializable {
 	private PermissionType permissionType;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "MP_ROLE_PERMI_REL", joinColumns = {
+	@JoinTable(name = "MP_SYS_ROLE_PERMI_REL", joinColumns = {
 			@JoinColumn(name = "PERMI_ID")
 	}, inverseJoinColumns = {
 			@JoinColumn(name = "ROLE_ID")
@@ -52,14 +46,6 @@ public class Permission extends BaseEntity implements Serializable {
 	private Set<Role> roles = new HashSet<Role>();
 	
 	public Permission() {}
-
-	public String getPermissionId() {
-		return permissionId;
-	}
-
-	public void setPermissionId(String permissionId) {
-		this.permissionId = permissionId;
-	}
 
 	public String getPermissionCode() {
 		return permissionCode;
@@ -104,8 +90,5 @@ public class Permission extends BaseEntity implements Serializable {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
-	
-	
 	
 }

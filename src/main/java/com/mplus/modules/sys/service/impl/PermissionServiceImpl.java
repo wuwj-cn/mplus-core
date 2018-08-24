@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.mplus.enums.DataState;
+import com.mplus.enums.Status;
 import com.mplus.modules.sys.entity.Permission;
 import com.mplus.modules.sys.repo.PermissionRepository;
 import com.mplus.modules.sys.service.PermissionService;
@@ -21,7 +21,7 @@ public class PermissionServiceImpl implements PermissionService {
 	
 	@Override
 	public Permission savePermission(Permission permission) {
-		if (!StringUtils.isEmpty(permission.getPermissionId())) {
+		if (!StringUtils.isEmpty(permission.getId())) {
 			throw new RuntimeException("object id is not null or empty");
 		}
 		return privilegeRepository.save(permission);
@@ -29,24 +29,22 @@ public class PermissionServiceImpl implements PermissionService {
 
 	@Override
 	public Permission updatePermission(Permission permission) {
-		if(StringUtils.isEmpty(permission.getPermissionId())) {
+		if(StringUtils.isEmpty(permission.getId())) {
 			throw new RuntimeException("object id is null or empty");
 		}
-		permission.setUpdateAt(new Date());
 		return privilegeRepository.save(permission);
 	}
 
 	@Override
 	public void removePermission(Permission permission) {
 		permission.setRoles(null);
-		permission.setDataState(DataState.DELETED);
-		permission.setUpdateAt(new Date());
+		permission.setStatus(Status.DELETED.getCode());
 		privilegeRepository.save(permission);
 	}
 
 	@Override
 	public Permission findOneByCode(String priviCode) {
-		return privilegeRepository.findOneByCode(priviCode, DataState.ENABLE);
+		return privilegeRepository.findOneByCode(priviCode, Status.NORMAL.getCode());
 	}
 
 }

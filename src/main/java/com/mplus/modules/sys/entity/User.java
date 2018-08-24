@@ -8,8 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -17,11 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mplus.core.entity.base.BaseEntity;
+import com.mplus.core.base.entity.BaseEntity;
 import com.mplus.enums.UserState;
 import com.mplus.enums.UserStateConverter;
 
@@ -29,12 +24,6 @@ import com.mplus.enums.UserStateConverter;
 @Table(name = "MP_SYS_USER")
 public class User extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -9071755205002858798L;
-
-	@Id
-	@Column(length = 64)
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	private String userId;
 
 	@Column(length = 20, nullable = false, unique = true)
 	private String userCode;
@@ -60,7 +49,7 @@ public class User extends BaseEntity implements Serializable {
 	private Org org;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "MP_USER_ROLE_REL", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
+	@JoinTable(name = "MP_SYS_USER_ROLE_REL", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
 			@JoinColumn(name = "ROLE_ID") })
 	private Set<Role> roles = new HashSet<Role>();
 	
@@ -70,15 +59,7 @@ public class User extends BaseEntity implements Serializable {
 	public User() {
 		this.userState = UserState.ENABLE;
 	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
+	
 	public String getUsername() {
 		return username;
 	}
