@@ -17,30 +17,28 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Component;
 
 import com.mplus.core.base.entity.BaseEntity;
 import com.mplus.core.base.repo.BaseRepository;
 import com.mplus.core.base.service.BaseService;
 import com.mplus.enums.Status;
+import com.mplus.modules.sys.entity.User;
+import com.mplus.modules.sys.util.UserUtils;
 
 public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializable> implements BaseService<T, ID> {
 
-//	BaseRepository<T, ID> baseRepository;
-//	
-//	/**
-//	 * 这里必须使用setter注入，如果使用@Autowired注入会导致异常
-//	 */
-//	public void setBaseRepository(BaseRepository<T, ID> baseRepository) {
-//		this.baseRepository = baseRepository;
-//	}
-	
 	public abstract BaseRepository<T, ID> getRepository();
 	
 	@Override
 	public T save(T t){
+		if(StringUtils.isNotBlank(t.getId())) {
+			throw new RuntimeException("object id is not null");
+		}
+		User user = UserUtils.getCurrentUser();
 		Date now = new Date();
+		t.setCreateBy(user.getId());
 		t.setCreateDate(now);
+		t.setUpdateBy(user.getId());
 		t.setUpdateDate(now);
 		t.setStatus(Status.NORMAL.getCode());
 		return getRepository().save(t);
@@ -48,9 +46,44 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 	
 	@Override
 	public Iterable<T> save(Iterable<T> entities){
+		User user = UserUtils.getCurrentUser();
 		Date now = new Date();
 		for (T t : entities) {
+			if(StringUtils.isNotBlank(t.getId())) {
+				throw new RuntimeException("object id is not null");
+			}
+			t.setCreateBy(user.getId());
 			t.setCreateDate(now);
+			t.setUpdateBy(user.getId());
+			t.setUpdateDate(now);
+			t.setStatus(Status.NORMAL.getCode());
+		}
+		return getRepository().save(entities);
+	}
+	
+	@Override
+	public T update(T t) {
+		User user = UserUtils.getCurrentUser();
+		Date now = new Date();
+		t.setCreateBy(user.getId());
+		t.setCreateDate(now);
+		t.setUpdateBy(user.getId());
+		t.setUpdateDate(now);
+		t.setStatus(Status.NORMAL.getCode());
+		return getRepository().save(t);
+	}
+
+	@Override
+	public Iterable<T> update(Iterable<T> entities) {
+		User user = UserUtils.getCurrentUser();
+		Date now = new Date();
+		for (T t : entities) {
+			if(StringUtils.isNotBlank(t.getId())) {
+				throw new RuntimeException("object id is not null");
+			}
+			t.setCreateBy(user.getId());
+			t.setCreateDate(now);
+			t.setUpdateBy(user.getId());
 			t.setUpdateDate(now);
 			t.setStatus(Status.NORMAL.getCode());
 		}
@@ -68,8 +101,11 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 	
 	@Override
 	public void delete(T t) {
+		User user = UserUtils.getCurrentUser();
 		Date now = new Date();
+		t.setCreateBy(user.getId());
 		t.setCreateDate(now);
+		t.setUpdateBy(user.getId());
 		t.setUpdateDate(now);
 		t.setStatus(Status.DELETED.getCode());
 		getRepository().save(t);
@@ -141,7 +177,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 	
 	private Predicate getPredicate(String[] arr, Object value,
 			Root<T> root, CriteriaBuilder cb) {
-		if(arr.length == 1){
+		if(arr.length == 1 || QueryTypeEnum.equal.name().equals(arr[1])){
 			return cb.equal(root.get(arr[0]).as(value.getClass()), value);  
 		}
 		if(QueryTypeEnum.like.name().equals(arr[1])){

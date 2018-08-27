@@ -66,7 +66,7 @@ public class UserUtils {
 		removeCache(CACHE_AREA_LIST);
 		removeCache(CACHE_OFFICE_LIST);
 		removeCache(CACHE_OFFICE_ALL_LIST);
-		UserUtils.clearCache(getUser());
+		UserUtils.clearCache(getCurrentUser());
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class UserUtils {
 	 * 获取当前用户
 	 * @return 取不到返回 new User()
 	 */
-	public static User getUser(){
+	public static User getCurrentUser(){
 		Principal principal = getPrincipal();
 		if (principal!=null){
 			User user = get(principal.getName());

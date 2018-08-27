@@ -11,21 +11,19 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mplus.modules.sys.entity.Permission;
 import com.mplus.modules.sys.entity.Role;
 import com.mplus.modules.sys.entity.User;
-import com.mplus.modules.sys.service.UserService;
 import com.mplus.modules.sys.util.UserUtils;
 
 @Component
 public class ShiroRealm extends AuthorizingRealm {
 	private static final Logger logger = LoggerFactory.getLogger(ShiroRealm.class);
 	
-	@Autowired
-	private UserService userService;
+//	@Autowired
+//	private UserService userService;
 
 	/**
 	 * 权限认证

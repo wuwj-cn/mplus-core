@@ -10,15 +10,25 @@ import org.springframework.data.domain.Pageable;
 public interface BaseService<T, ID extends Serializable> {
 	
 	/**
-	 * 新增或更新
+	 * 新增
 	 */
 	T save(T t);
 	
 	/**
-	 * 新增或更新
+	 * 批量新增
 	 * 注意数量不要太大，特别是数据迁移时不要使用该方法
 	 */
 	Iterable<T> save(Iterable<T> entities);
+	
+	/**
+	 * 更新
+	 */
+	T update(T t);
+
+	/**
+	 * 批量更新
+	 */
+	Iterable<T> update(Iterable<T> entities);
 	
 	/**
 	 * 根据ID删除
