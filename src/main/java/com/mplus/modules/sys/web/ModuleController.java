@@ -36,9 +36,9 @@ public class ModuleController {
 	@RequestMapping(value = "/list/{page}/{size}", method = RequestMethod.GET)
 	public Result list(@PathVariable int page, @PathVariable int size) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("status", Status.NORMAL.getCode());
+		params.put("status:ne", Status.DELETED.getCode());
 		
-		Pageable pageable = new PageRequest(0, 10,new Sort(Direction.DESC, "updateDate"));
+		Pageable pageable = new PageRequest(page, size,new Sort(Direction.DESC, "updateDate"));
 		Page<Module> modules = moduleService.list(params, pageable);
 		return Result.sucess(modules);
 	}
