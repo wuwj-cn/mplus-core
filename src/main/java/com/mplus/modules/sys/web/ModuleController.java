@@ -38,7 +38,7 @@ public class ModuleController {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("status:ne", Status.DELETED.getCode());
 		
-		Pageable pageable = new PageRequest(page, size,new Sort(Direction.DESC, "updateDate"));
+		Pageable pageable = new PageRequest(page, size,new Sort(Direction.DESC, "createDate"));
 		Page<Module> modules = moduleService.list(params, pageable);
 		return Result.sucess(modules);
 	}
