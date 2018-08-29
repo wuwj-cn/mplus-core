@@ -65,11 +65,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 	public T update(T t) {
 		User user = UserUtils.getCurrentUser();
 		Date now = new Date();
-		t.setCreateBy(user.getId());
-		t.setCreateDate(now);
 		t.setUpdateBy(user.getId());
 		t.setUpdateDate(now);
-		t.setStatus(Status.NORMAL.getCode());
 		return getRepository().save(t);
 	}
 
@@ -81,11 +78,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 			if(StringUtils.isNotBlank(t.getId())) {
 				throw new RuntimeException("object id is not null");
 			}
-			t.setCreateBy(user.getId());
-			t.setCreateDate(now);
 			t.setUpdateBy(user.getId());
 			t.setUpdateDate(now);
-			t.setStatus(Status.NORMAL.getCode());
 		}
 		return getRepository().save(entities);
 	}
@@ -103,8 +97,6 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 	public void delete(T t) {
 		User user = UserUtils.getCurrentUser();
 		Date now = new Date();
-		t.setCreateBy(user.getId());
-		t.setCreateDate(now);
 		t.setUpdateBy(user.getId());
 		t.setUpdateDate(now);
 		t.setStatus(Status.DELETED.getCode());
