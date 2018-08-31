@@ -169,7 +169,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 	
 	private Predicate getPredicate(String[] arr, Object value,
 			Root<T> root, CriteriaBuilder cb) {
-		if(arr.length == 1 || QueryTypeEnum.equal.name().equals(arr[1])){
+		if(arr.length == 1 || QueryTypeEnum.eq.name().equals(arr[1])){
 			return cb.equal(root.get(arr[0]).as(value.getClass()), value);  
 		}
 		if(QueryTypeEnum.like.name().equals(arr[1])){
@@ -287,7 +287,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 
 	enum QueryTypeEnum {
 		like,
-		equal,
+		eq,
 		ne,
 		lt,
 		lte,
