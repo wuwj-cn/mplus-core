@@ -37,7 +37,7 @@ public class Role extends BaseEntity implements Serializable {
 	@JoinTable(name = "MP_SYS_ROLE_PERMI_REL", joinColumns = {
 			@JoinColumn(name = "ROLE_ID")
 	}, inverseJoinColumns = {
-			@JoinColumn(name = "PRIVI_ID")
+			@JoinColumn(name = "PERMI_ID")
 	})
 	private Set<Permission> permissions = new HashSet<Permission>();
 	

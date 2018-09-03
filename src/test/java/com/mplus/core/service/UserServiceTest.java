@@ -38,7 +38,7 @@ public class UserServiceTest {
 		User user = new User();
 		user.setUsername("wuwj");
 		user.setPassword("123456");
-		user.setUserState(UserState.ENABLE);
+//		user.setUserState(UserState.ENABLE);
 		Org org = orgService.findOneByCode("001101");
 		user.setOrg(org);
 		userService.saveUser(user);

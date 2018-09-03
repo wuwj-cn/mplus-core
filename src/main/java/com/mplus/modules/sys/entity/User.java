@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -17,8 +16,6 @@ import javax.persistence.Transient;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.mplus.core.base.entity.BaseEntity;
-import com.mplus.enums.UserState;
-import com.mplus.enums.UserStateConverter;
 
 @Entity
 @Table(name = "MP_SYS_USER")
@@ -27,7 +24,7 @@ public class User extends BaseEntity implements Serializable {
 
 	@Column(length = 20, nullable = false, unique = true)
 	private String userCode;
-
+	
 	@Column(length = 100, nullable = false, unique = true)
 	private String username;
 
@@ -35,14 +32,10 @@ public class User extends BaseEntity implements Serializable {
 	private String password;
 
 	@Column(length = 100)
-	private String name;
+	private String nickName;
 
 	@Column(length = 50)
 	private String email;
-
-	@Column(length = 2, nullable = false)
-	@Convert(converter = UserStateConverter.class)
-	private UserState userState;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORG_ID")
@@ -57,7 +50,7 @@ public class User extends BaseEntity implements Serializable {
 	private Boolean rememberMe;
 
 	public User() {
-		this.userState = UserState.ENABLE;
+		
 	}
 	
 	public String getUsername() {
@@ -86,12 +79,12 @@ public class User extends BaseEntity implements Serializable {
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getEmail() {
@@ -100,26 +93,6 @@ public class User extends BaseEntity implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	@JSONField(serialize = false)
-	public UserState getUserState() {
-		return userState;
-	}
-
-	@JSONField(serialize = false)
-	public void setUserState(UserState userState) {
-		this.userState = userState;
-	}
-
-	@JSONField(name = "uState")
-	public String getUState() {
-		return userState.getCode();
-	}
-
-	@JSONField(name = "uState")
-	public void setUState(String code) {
-		this.userState = UserState.fromString(code);
 	}
 
 	public Org getOrg() {
