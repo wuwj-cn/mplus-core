@@ -11,10 +11,6 @@ public interface UserService extends BaseService<User, String> {
 
 	User saveUser(User user);
 	
-	User updateUser(User user);
-	
-	void removeUser(User user);
-	
 	User findByUsername(String username);
 	
 	List<User> findByOrg(Org org);

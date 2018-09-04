@@ -1,5 +1,6 @@
 package com.mplus.modules.sys.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.mplus.modules.sys.repo.UserRepository;
 import com.mplus.modules.sys.service.CodeRuleService;
 import com.mplus.modules.sys.service.OrgService;
 import com.mplus.modules.sys.service.UserService;
+import com.mplus.modules.sys.util.UserUtils;
 import com.mplus.utils.EncryptUtil;
 
 @Service
@@ -62,7 +64,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
 		String hashPassword = EncryptUtil.encryptPassword(user.getPassword());
 		user.setPassword(hashPassword);
 		
-		userRepository.save(user);
+//		userRepository.save(user);
+		super.save(user);
 		return user;
 	}
 
@@ -73,21 +76,6 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
 			throw new RuntimeException("org is null");
 		}
 		return userRepository.findByOrg(org.getId(), Status.NORMAL.getCode());
-	}
-
-	@Override
-	public User updateUser(User user) {
-		if (StringUtils.isEmpty(user.getId())) {
-			throw new RuntimeException("object id is null or empty");
-		}
-		return userRepository.save(user);
-	}
-
-	@Override
-	public void removeUser(User user) {
-		user.setRoles(null);
-		user.setStatus(Status.DELETED.getCode());
-		userRepository.save(user);
 	}
 
 	@Override

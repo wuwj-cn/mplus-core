@@ -40,7 +40,7 @@ public class UserController {
 	@ApiImplicitParam(name = "user", value = "用户实体信息", required = true, dataType = "User")
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public Result update(@RequestBody User user) {
-		userService.updateUser(user);
+		userService.update(user);
 		return Result.sucess(user);
 	}
 	
@@ -49,7 +49,7 @@ public class UserController {
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public Result remove(@PathVariable String userCode) {
 		User user = userService.findOneByCode(userCode);
-		userService.removeUser(user);
+		userService.delete(user);
 		return Result.sucess(user);
 	}
 	

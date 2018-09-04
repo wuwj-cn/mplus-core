@@ -67,6 +67,6 @@ public class UserServiceTest {
 	@Test
 	public void testRemoveUser() {
 		User user =  userService.findOneByCode("00004");
-		userService.removeUser(user);
+		userService.delete(user);
 	}
 }

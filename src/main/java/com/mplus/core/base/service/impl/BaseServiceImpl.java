@@ -63,6 +63,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 	
 	@Override
 	public T update(T t) {
+		if (StringUtils.isBlank(t.getId())) {
+			throw new RuntimeException("object id is null or empty");
+		}
 		User user = UserUtils.getCurrentUser();
 		Date now = new Date();
 		t.setUpdateBy(user.getId());
@@ -75,8 +78,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 		User user = UserUtils.getCurrentUser();
 		Date now = new Date();
 		for (T t : entities) {
-			if(StringUtils.isNotBlank(t.getId())) {
-				throw new RuntimeException("object id is not null");
+			if(StringUtils.isBlank(t.getId())) {
+				throw new RuntimeException("object id is null or empty");
 			}
 			t.setUpdateBy(user.getId());
 			t.setUpdateDate(now);

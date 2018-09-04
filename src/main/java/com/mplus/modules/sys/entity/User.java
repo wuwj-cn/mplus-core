@@ -36,6 +36,9 @@ public class User extends BaseEntity implements Serializable {
 
 	@Column(length = 50)
 	private String email;
+	
+	@Column(length = 2)
+	private String userStatus;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORG_ID")
@@ -93,6 +96,14 @@ public class User extends BaseEntity implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
 	}
 
 	public Org getOrg() {
