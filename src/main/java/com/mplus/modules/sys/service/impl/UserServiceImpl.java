@@ -51,11 +51,11 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
 		if (!StringUtils.isEmpty(user.getId())) {
 			throw new RuntimeException("object id is not null or empty");
 		}
-		if (null == user.getOrg().getOrgCode()) {
-			throw new RuntimeException("org code is null");
-		}
-		Org org = orgService.findOneByCode(user.getOrg().getOrgCode());
-		user.setOrg(org);
+//		if (null == user.getOrg().getOrgCode()) {
+//			throw new RuntimeException("org code is null");
+//		}
+//		Org org = orgService.findOneByCode(user.getOrg().getOrgCode());
+//		user.setOrg(org);
 		
 		String userCode = codeRuleService.getSerial(RuleCode.USER);
 		user.setUserCode(userCode);
@@ -65,6 +65,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
 		user.setPassword(hashPassword);
 		
 //		userRepository.save(user);
+		user.setUserStatus("0");
 		super.save(user);
 		return user;
 	}
