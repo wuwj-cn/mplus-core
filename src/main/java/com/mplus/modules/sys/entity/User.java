@@ -130,9 +130,4 @@ public class User extends BaseEntity implements Serializable {
 		this.rememberMe = rememberMe;
 	}
 
-	@JSONField(serialize = false)
-	public String getCredentialsSalt() {
-		return this.password.substring(0, 16);
-	}
-
 }

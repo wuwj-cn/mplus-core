@@ -27,7 +27,6 @@ public class UserUtils {
 
 	public static final String USER_CACHE = "userCache";
 	public static final String USER_CACHE_ID_ = "id_";
-	public static final String USER_CACHE_LOGIN_NAME_ = "ln";
 	public static final String USER_CACHE_LIST_BY_OFFICE_ID_ = "oid_";
 	
 	public static final String CACHE_AUTH_INFO = "authInfo";
@@ -39,7 +38,7 @@ public class UserUtils {
 	
 	/**
 	 * 根据username获取用户
-	 * @param id
+	 * @param username
 	 * @return 取不到返回null
 	 */
 	public static User get(String username){
@@ -50,8 +49,7 @@ public class UserUtils {
 				return null;
 			}
 //			user.setRoleList(roleDao.findList(new Role(user)));
-			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
-			CacheUtils.put(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getUsername(), user);
+			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getUsername(), user);
 		}
 		return user;
 	}
@@ -74,9 +72,7 @@ public class UserUtils {
 	 * @param user
 	 */
 	public static void clearCache(User user){
-		CacheUtils.remove(USER_CACHE, USER_CACHE_ID_ + user.getId());
-		CacheUtils.remove(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getUsername());
-		CacheUtils.remove(USER_CACHE, USER_CACHE_LOGIN_NAME_ + user.getUsername());
+		CacheUtils.remove(USER_CACHE, USER_CACHE_ID_ + user.getUsername());
 //		if (user.getOffice() != null && user.getOffice().getId() != null){
 //			CacheUtils.remove(USER_CACHE, USER_CACHE_LIST_BY_OFFICE_ID_ + user.getOffice().getId());
 //		}

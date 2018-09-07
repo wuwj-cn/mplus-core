@@ -53,14 +53,13 @@ public class LoginController {
 		try {
 			currentUser.login(token);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("用户[" + username + "]登录认证未通过, 原因：" + e.getMessage() );
 		}
 
 		// 验证是否登录成功
 		if (currentUser.isAuthenticated()) {
 			logger.info("用户[" + username + "]登录认证通过");
-			return Result.sucess(token);
+			return Result.sucess(currentUser.getPrincipal());
 		} else {
 			token.clear();
 			return Result.failure(ResponseStatus.AUTH_NOT_PASSED.value(), ResponseStatus.AUTH_NOT_PASSED.getDesc());

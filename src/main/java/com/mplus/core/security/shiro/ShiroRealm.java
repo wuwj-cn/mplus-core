@@ -4,6 +4,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -17,6 +18,7 @@ import com.mplus.modules.sys.entity.Permission;
 import com.mplus.modules.sys.entity.Role;
 import com.mplus.modules.sys.entity.User;
 import com.mplus.modules.sys.util.UserUtils;
+import com.mplus.utils.Encodes;
 
 @Component
 public class ShiroRealm extends AuthorizingRealm {
@@ -46,10 +48,11 @@ public class ShiroRealm extends AuthorizingRealm {
 	 * 登录认证
 	 */
 	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken ) throws AuthenticationException {
 		logger.info("ShiroRealm.doGetAuthenticationInfo()");
 		// 获取用户的输入的账号.
-		String username = (String) token.getPrincipal();
+		UsernamePasswordToken token = (UsernamePasswordToken) authcToken ;
+		String username = token.getUsername();
 		// 通过username从数据库中查找 User对象，如果找到，没找到.
 		// 实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
 //		User user = userService.findByUsername(username);
@@ -57,9 +60,10 @@ public class ShiroRealm extends AuthorizingRealm {
 		if (null == user) {
 			return null;
 		} 
-		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user, // 用户名
-				user.getPassword(), // 密码
-				ByteSource.Util.bytes(user.getCredentialsSalt()), // salt
+		byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
+		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), // 用户名
+				user.getPassword().substring(16), // 密码
+				ByteSource.Util.bytes(salt), // salt
 				getName() // realm name
 		);
 		return authenticationInfo;
