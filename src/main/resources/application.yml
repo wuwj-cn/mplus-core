@@ -1,3 +1,59 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
+    platform: mysql
+    url: jdbc:mysql://123.207.61.221:3306/mplus?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8
+    username: mplus
+    password: cool04433@
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat,wall,log4j
+    logSlowSql: true
+  jpa:
+    show-sql: true
+    open-in-view: true
+    generate-ddl: false
+    hibernate.ddl-auto: update
+    hibernate:
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
+    suffix: .html
+  redis:
+    host: 123.207.61.221
+    port: 6379
+    timeout: 3600
+    password: cool04433@
+    pool:
+      max-active: 100
+      max-idle: 5
+      max-wait: 60000
+  session:
+    store-type: redis
+    redis:
+      namespace: mplus
+server:
+  port: 8080
+  session:
+    timeout: 60
+  tomcat:
+    uri-encoding: UTF-8
 facebook:
   client:
     clientId: 233668646673605
@@ -8,7 +64,7 @@ facebook:
     authenticationScheme: query
     clientAuthenticationScheme: form
   resource:
-    userInfoUri: https://graph.facebook.com/me  
+    userInfoUri: https://graph.facebook.com/me
 github:
   client:
     clientId: bd1c0a783ccdd1c9b9e4
