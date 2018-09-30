@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mplus.core.advice.Result;
 import com.mplus.enums.ResponseStatus;
 import com.mplus.modules.sys.entity.User;
@@ -43,7 +44,7 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public Result login(@RequestBody User user, HttpServletRequest request) {
 		String host = getRemoteAddr(request);
-		String username = user.getUsername();
+		String username = user.getUserName();
 		String password = user.getPassword();
 		// Boolean rememberMe = user.getRememberMe();
 

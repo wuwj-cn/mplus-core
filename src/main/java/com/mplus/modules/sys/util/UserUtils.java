@@ -49,7 +49,7 @@ public class UserUtils {
 				return null;
 			}
 //			user.setRoleList(roleDao.findList(new Role(user)));
-			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getUsername(), user);
+			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getUserName(), user);
 		}
 		return user;
 	}
@@ -72,7 +72,7 @@ public class UserUtils {
 	 * @param user
 	 */
 	public static void clearCache(User user){
-		CacheUtils.remove(USER_CACHE, USER_CACHE_ID_ + user.getUsername());
+		CacheUtils.remove(USER_CACHE, USER_CACHE_ID_ + user.getUserName());
 //		if (user.getOffice() != null && user.getOffice().getId() != null){
 //			CacheUtils.remove(USER_CACHE, USER_CACHE_LIST_BY_OFFICE_ID_ + user.getOffice().getId());
 //		}

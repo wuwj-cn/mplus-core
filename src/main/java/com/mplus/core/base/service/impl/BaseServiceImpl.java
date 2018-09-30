@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -58,7 +59,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 			t.setUpdateDate(now);
 			t.setStatus(Status.NORMAL.getCode());
 		}
-		return getRepository().save(entities);
+		return getRepository().saveAll(entities);
 	}
 	
 	@Override
@@ -84,16 +85,16 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 			t.setUpdateBy(user.getId());
 			t.setUpdateDate(now);
 		}
-		return getRepository().save(entities);
+		return getRepository().saveAll(entities);
 	}
 	
 	@Override
 	public void delete(ID id){
-		T t = findById(id);
+		Optional<T> t = findById(id);
 		if(t == null){
 			return;
 		}
-		delete(t);
+		delete(t.get());
 	}
 	
 	@Override
@@ -107,8 +108,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializa
 	}
 	
 	@Override
-	public T findById(ID id) {
-		return getRepository().findOne(id);
+	public Optional<T> findById(ID id) {
+		return getRepository().findById(id);
 	}
 	
 	@Override

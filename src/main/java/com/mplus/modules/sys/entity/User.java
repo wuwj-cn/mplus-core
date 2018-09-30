@@ -26,7 +26,7 @@ public class User extends BaseEntity implements Serializable {
 	private String userCode;
 	
 	@Column(length = 100, nullable = false, unique = true)
-	private String username;
+	private String userName;
 
 	@Column(length = 64)
 	private String password;
@@ -56,12 +56,12 @@ public class User extends BaseEntity implements Serializable {
 		
 	}
 	
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getUserCode() {

@@ -3,6 +3,7 @@ package com.mplus.core.base.service;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,7 +44,7 @@ public interface BaseService<T, ID extends Serializable> {
 	/**
 	 * 根据ID查找对象
 	 */
-	T findById(ID id);
+	Optional<T> findById(ID id);
 	
 	List<T> findAll();
 	

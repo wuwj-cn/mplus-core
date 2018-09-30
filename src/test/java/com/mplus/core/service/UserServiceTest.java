@@ -36,7 +36,7 @@ public class UserServiceTest {
 	@Test
 	public void testSaveUser() {
 		User user = new User();
-		user.setUsername("wuwj");
+		user.setUserName("wuwj");
 		user.setPassword("123456");
 //		user.setUserState(UserState.ENABLE);
 		Org org = orgService.findOneByCode("001101");

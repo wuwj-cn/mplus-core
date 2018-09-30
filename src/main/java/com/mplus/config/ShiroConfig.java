@@ -4,8 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -14,9 +14,13 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.mplus.core.cache.redis.RedisCacheManager;
+import com.mplus.core.cache.redis.RedisSessionDAO;
+import com.mplus.core.security.shiro.MySessionManager;
 import com.mplus.core.security.shiro.RetryLimitHashedCredentialsMatcher;
 import com.mplus.core.security.shiro.ShiroRealm;
 import com.mplus.utils.EncryptUtil;
@@ -82,40 +86,73 @@ public class ShiroConfig {
 	}
 	
 	@Bean
-	public EhCacheManager ehCacheManager() {
-		EhCacheManager em = new EhCacheManager();
-		em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
-		return em;
+	public SecurityManager securityManager() {
+		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+		securityManager.setRealm(shiroRealm());
+		// 自定义session管理 使用redis
+        securityManager.setSessionManager(sessionManager());
+		securityManager.setCacheManager(cacheManager());
+		securityManager.setRememberMeManager(rememberMeManager());
+		return securityManager;
 	}
-
+	
 	@Bean
 	public ShiroRealm shiroRealm() {
 		ShiroRealm realm = new ShiroRealm();
-		realm.setCacheManager(ehCacheManager());
+		realm.setCacheManager(cacheManager());
 		realm.setCredentialsMatcher(hashedCredentialsMatcher());
 		return realm;
 	}
 	
-	@Bean
-	public SecurityManager securityManager() {
-		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-		securityManager.setRealm(shiroRealm());
-		securityManager.setCacheManager(ehCacheManager());
-		securityManager.setRememberMeManager(rememberMeManager());
-		return securityManager;
+	@Bean(name = "myCacheManager")
+	public RedisCacheManager cacheManager() {
+		return new RedisCacheManager();
 	}
-
+	
+	@Bean
+	public SessionManager sessionManager() {
+		MySessionManager sessionManager = new MySessionManager();
+		sessionManager.setSessionDAO(sessionDAO());
+		sessionManager.setGlobalSessionTimeout(1800);
+		sessionManager.setCacheManager(cacheManager());
+		return sessionManager;
+	}
+	
+	@Bean
+	public RedisSessionDAO sessionDAO() {
+		return new RedisSessionDAO();
+	}
+	
+//	@Bean
+//	public EhCacheManager cacheManager() {
+//		EhCacheManager em = new EhCacheManager();
+//		em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
+//		return em;
+//	}
+	
 	/**
 	 * 凭证匹配器
 	 * 
 	 */
 	@Bean
 	public HashedCredentialsMatcher hashedCredentialsMatcher() {
-		RetryLimitHashedCredentialsMatcher hashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher(ehCacheManager());
+		RetryLimitHashedCredentialsMatcher hashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher(cacheManager());
 		hashedCredentialsMatcher.setHashAlgorithmName(EncryptUtil.HASH_ALGORITHM);// 散列算法
 		hashedCredentialsMatcher.setHashIterations(EncryptUtil.HASH_INTERATIONS);// 散列的次数
 		return hashedCredentialsMatcher;
 	}
+	
+	 /***
+     * 授权所用配置
+     *
+     * @return
+     */
+    @Bean
+    public DefaultAdvisorAutoProxyCreator getDefaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+        return defaultAdvisorAutoProxyCreator;
+    }
 
 	/**
 	 * 开启shiro aop注解支持. 使用代理方式;所以需要开启代码支持;
