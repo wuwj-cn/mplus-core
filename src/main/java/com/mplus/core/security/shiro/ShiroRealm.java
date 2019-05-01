@@ -21,7 +21,7 @@ import com.mplus.modules.sys.entity.User;
 import com.mplus.modules.sys.service.UserService;
 import com.mplus.utils.Encodes;
 
-@Component
+//@Component
 public class ShiroRealm extends AuthorizingRealm {
 	private static final Logger logger = LoggerFactory.getLogger(ShiroRealm.class);
 	

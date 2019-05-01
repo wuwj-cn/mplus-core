@@ -111,4 +111,10 @@ public class UserController {
 		Page<User> users = userService.list(searchParams, pageable);
 		return Result.sucess(users);
 	}
+	
+	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
+	public Result<User> getUserByUsername(@PathVariable String username) {
+		User user = userService.findByUsername(username);
+		return Result.sucess(user);
+	}
 }

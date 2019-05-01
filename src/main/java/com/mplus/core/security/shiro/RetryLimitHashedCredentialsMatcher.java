@@ -10,7 +10,7 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
 	private Cache<String, AtomicInteger> passwordRetryCache;
 	private final int MAX_RETRY_COUNT = 5;

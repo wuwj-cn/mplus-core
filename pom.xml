@@ -10,19 +10,23 @@
 	<name>mplus-core</name>
 	<url>http://maven.apache.org</url>
 
+<!-- 	<parent> -->
+<!-- 		<groupId>org.springframework.boot</groupId> -->
+<!-- 		<artifactId>spring-boot-starter-parent</artifactId> -->
+<!-- 		<version>2.0.5.RELEASE</version> -->
+<!-- 		<relativePath /> -->
+<!-- 	</parent> -->
+	
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.5.RELEASE</version>
-		<relativePath />
+		<groupId>com.mplus</groupId>
+		<artifactId>mplus</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<commons-lang3.version>3.4</commons-lang3.version>
 		<commons-io.version>2.5</commons-io.version>
-		<commons-codec.version>1.10</commons-codec.version>
 		<commons-fileupload.version>1.3.1</commons-fileupload.version>
 		<commons-beanutils.version>1.9.3</commons-beanutils.version>
 		<activiti.version>6.0.0</activiti.version>
@@ -60,6 +64,18 @@
 		    <artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 		<!-- spring-boot end -->
+		
+		<!-- spring cloud start -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+		<!-- spring cloud end -->
 
 		<!-- mysql start -->
 		<dependency>
@@ -74,7 +90,6 @@
 			<!-- java基本工具类包 -->
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
 		</dependency>
 		<dependency>
 			<!-- IO流处理工具, 简化IO流和操作文件的代码 -->
@@ -86,7 +101,6 @@
 			<!-- 公共的编解码实现 -->
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>${commons-codec.version}</version>
 		</dependency>
 		<dependency>
 			<!-- 文件上传下载 -->
@@ -146,6 +160,12 @@
 <!-- 			<version>2.4.2.1-RELEASE</version> -->
 <!-- 		</dependency> -->
 		<!-- shiro end -->
+		
+		<!-- redis依赖 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+		</dependency>		
 
 		<dependency>
 			<groupId>io.springfox</groupId>

@@ -1,9 +1,9 @@
 package com.mplus.modules.sys.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -19,7 +19,6 @@ import com.mplus.modules.sys.repo.UserRepository;
 import com.mplus.modules.sys.service.CodeRuleService;
 import com.mplus.modules.sys.service.OrgService;
 import com.mplus.modules.sys.service.UserService;
-import com.mplus.modules.sys.util.UserUtils;
 import com.mplus.utils.EncryptUtil;
 
 @Service
@@ -61,7 +60,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements Us
 		user.setUserCode(userCode);
 		
 		//对用户进行散列加密
-		String hashPassword = EncryptUtil.encryptPassword(user.getPassword());
+//		String hashPassword = EncryptUtil.encryptPassword(user.getPassword());
+		String hashPassword = new BCryptPasswordEncoder().encode(user.getPassword());
 		user.setPassword(hashPassword);
 		
 //		userRepository.save(user);

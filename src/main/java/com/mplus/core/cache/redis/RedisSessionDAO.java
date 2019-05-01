@@ -46,7 +46,7 @@ public class RedisSessionDAO extends EnterpriseCacheSessionDAO {
     @Override
     protected void doUpdate(Session session) {
         super.doUpdate(session);
-        logger.info("获取session:{}", session.getId());
+        logger.info("更新session:{}", session.getId());
         String key = prefix + session.getId().toString();
         if (!redisTemplate.hasKey(key)) {
             redisTemplate.opsForValue().set(key, session);
@@ -57,8 +57,13 @@ public class RedisSessionDAO extends EnterpriseCacheSessionDAO {
     // 删除session
     @Override
     protected void doDelete(Session session) {
-        logger.info("删除session:{}", session.getId());
-        super.doDelete(session);
-        redisTemplate.delete(prefix + session.getId().toString());
+        try {
+			logger.info("删除session:{}", session.getId());
+			super.doDelete(session);
+			redisTemplate.delete(prefix + session.getId().toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }
