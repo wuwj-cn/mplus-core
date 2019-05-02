@@ -21,8 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.alibaba.fastjson.JSON;
-import com.mplus.core.entity.Org;
-import com.mplus.core.service.OrgService;
+import com.mplus.modules.sys.entity.Org;
+import com.mplus.modules.sys.service.OrgService;
 
 /**
  * @author wuwj
@@ -50,7 +50,7 @@ public class OrgControllerTest {
 		Org org = new Org();
 		org.setOrgCode("0");
 		org.setOrgName("根节点");
-		org.setParentOrgId(null);
+		org.setParentId(null);
 		String jsonOrg = JSON.toJSONString(org);
 		this.mvc.perform(post("/org/add").contentType(MediaType.APPLICATION_JSON_UTF8).content(jsonOrg))
 				.andExpect(status().isOk()).andDo(print()).andReturn().getResponse().getContentAsString();
@@ -62,7 +62,7 @@ public class OrgControllerTest {
 		Org org = new Org();
 		org.setOrgCode("001300");
 		org.setOrgName("莫克信息");
-		org.setParentOrgId(root.getOrgId());
+		org.setParentId(root.getId());
 		String jsonOrg = JSON.toJSONString(org);
 		this.mvc.perform(post("/org/add").contentType(MediaType.APPLICATION_JSON_UTF8).content(jsonOrg))
 				.andExpect(status().isOk()).andDo(print()).andReturn().getResponse().getContentAsString();

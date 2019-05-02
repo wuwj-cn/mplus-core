@@ -1,26 +1,29 @@
 package com.mplus.core.advice;
 
+import java.io.Serializable;
+
 import com.mplus.enums.ResponseStatus;
 
-public class Result {
-
+public class Result<T> implements Serializable {
+	private static final long serialVersionUID = 7212115037072836975L;
+	
 	private int status;
 	private String msg;
-	private Object data;
+	private T data;
 
 	private Result() {
 	}
 
-	public static Result sucess(Object data) {
-		Result result = new Result();
+	public static <T> Result<T> sucess(T data) {
+		Result<T> result = new Result<T>();
 		result.setStatus(ResponseStatus.SUCCESS.value());
 		result.setMsg(ResponseStatus.SUCCESS.getDesc());
 		result.setData(data);
 		return result;
 	}
 
-	public static Result failure(int stauts, String msg) {
-		Result result = new Result();
+	public static <T> Result<T> failure(int stauts, String msg) {
+		Result<T> result = new Result<T>();
 		result.setStatus(stauts);
 		result.setMsg(msg);
 		result.setData(null);
@@ -43,12 +46,11 @@ public class Result {
 		this.msg = msg;
 	}
 
-	public Object getData() {
+	public T getData() {
 		return data;
 	}
 
-	public void setData(Object data) {
+	public void setData(T data) {
 		this.data = data;
 	}
-	
 }

@@ -12,10 +12,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.mplus.core.entity.Org;
-import com.mplus.core.entity.Role;
-import com.mplus.core.entity.User;
 import com.mplus.enums.UserState;
+import com.mplus.modules.sys.entity.Org;
+import com.mplus.modules.sys.entity.Role;
+import com.mplus.modules.sys.entity.User;
+import com.mplus.modules.sys.service.OrgService;
+import com.mplus.modules.sys.service.RoleService;
+import com.mplus.modules.sys.service.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
@@ -33,9 +36,9 @@ public class UserServiceTest {
 	@Test
 	public void testSaveUser() {
 		User user = new User();
-		user.setUsername("wuwj");
+		user.setUserName("wuwj");
 		user.setPassword("123456");
-		user.setUserState(UserState.ENABLE);
+//		user.setUserState(UserState.ENABLE);
 		Org org = orgService.findOneByCode("001101");
 		user.setOrg(org);
 		userService.saveUser(user);
@@ -64,6 +67,6 @@ public class UserServiceTest {
 	@Test
 	public void testRemoveUser() {
 		User user =  userService.findOneByCode("00004");
-		userService.removeUser(user);
+		userService.delete(user);
 	}
 }

@@ -4,16 +4,16 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter
-public class DataStateConverter implements AttributeConverter<DataState, String> {
+public class DataStateConverter implements AttributeConverter<Status, String> {
 
 	@Override
-	public String convertToDatabaseColumn(DataState state) {
+	public String convertToDatabaseColumn(Status state) {
 		return state.getCode();
 	}
 
 	@Override
-	public DataState convertToEntityAttribute(String dbData) {
-		return DataState.fromString(dbData);
+	public Status convertToEntityAttribute(String dbData) {
+		return Status.fromString(dbData);
 	}
 	
 }
